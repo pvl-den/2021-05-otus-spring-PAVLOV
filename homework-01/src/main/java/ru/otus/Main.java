@@ -1,8 +1,7 @@
-package ru.otus.hw1;
+package ru.otus;
 
 public class Main {
 
     public static void main(String[] args) {
-        System.out.println("hello");
     }
 }
