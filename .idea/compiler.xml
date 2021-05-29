@@ -10,7 +10,8 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="homework-01" target="1.5" />
+      <module name="homework-01" target="11" />
+      <module name="spring-01-exercise" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
