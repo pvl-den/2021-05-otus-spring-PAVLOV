@@ -1,9 +1,9 @@
 package ru.otus.service.util;
 
+import org.springframework.core.io.ClassPathResource;
 import ru.otus.domain.Question;
 
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -16,7 +16,8 @@ public final class Utilities {
         final List<String[]> stringList = new ArrayList<>();
         List<Question> questions = new ArrayList<>();
 
-        try (Scanner scanner = new Scanner(Paths.get(fileName).toFile())) {
+        try (Scanner scanner = new Scanner(new ClassPathResource(fileName).getInputStream())) {
+
             final String DELIMITER = "\n";
             scanner.useDelimiter(DELIMITER);
 
@@ -24,12 +25,12 @@ public final class Utilities {
                 stringList.add(scanner.next().split(";"));
             }
 
-            questions = stringList.stream().map(line -> Question.builder()
-                    .question(line[0])
-                    .answer(Arrays.asList(line).subList(1, line.length))
-                    .build())
+            questions = stringList.stream().
+                    map(line -> Question.builder()
+                            .question(line[0])
+                            .answer(Arrays.asList(line).subList(1, line.length))
+                            .build())
                     .collect(Collectors.toList());
-
         } catch (IOException ex) {
             ex.printStackTrace();
         }

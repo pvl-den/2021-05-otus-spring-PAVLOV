@@ -5,7 +5,7 @@
         http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="questionsDao" class="ru.otus.dao.QuestionsDaoImpl">
-        <property name="fileName" value="homework-01/src/main/resources/questions.csv"/>
+        <property name="fileName" value="questions.csv"/>
     </bean>
 
     <bean id="questionsService" class="ru.otus.service.QuestionsServiceImpl">
