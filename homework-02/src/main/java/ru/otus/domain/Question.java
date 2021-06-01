@@ -11,6 +11,8 @@ public class Question {
 
     private String question;
 
-    private List<String> answer;
+    private List<String> correctAnswer;
+
+    private String userAnswer;
 
 }

@@ -2,7 +2,10 @@ package ru.otus;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.otus.domain.Question;
-import ru.otus.service.QuestionsService;
+import ru.otus.domain.User;
+import ru.otus.service.questions.QuestionsService;
+import ru.otus.service.quiz.QuizService;
+import ru.otus.service.quiz.QuizServiceImpl;
 
 import java.util.List;
 
@@ -12,9 +15,7 @@ public class Main {
 
         final ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("/spring-context.xml");
 
-        final QuestionsService service = context.getBean(QuestionsService.class);
-        final List<Question> allQuestions1 = service.getAllQuestions();
-
-        allQuestions1.forEach(System.out::println);
+        QuizService quizService = context.getBean(QuizService.class);
+        quizService.startQuiz();
     }
 }

@@ -8,6 +8,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.otus.dao.QuestionsDao;
 import ru.otus.domain.Question;
+import ru.otus.service.questions.QuestionsServiceImpl;
 
 import java.util.Collections;
 import java.util.List;
@@ -33,7 +34,7 @@ public class QuestionsServiceImplTest {
     void getAllQuestions() {
         List<Question> questions = Collections.singletonList(Question.builder()
                 .question("testQuestion")
-                .answer(Collections.singletonList("testAnswer"))
+                .correctAnswer(Collections.singletonList("testAnswer"))
                 .build());
 
         given(questionsDao.getAllQuestions()).willReturn(questions);

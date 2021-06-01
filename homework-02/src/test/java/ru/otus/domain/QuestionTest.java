@@ -13,7 +13,7 @@ class QuestionTest {
     @DisplayName("корректно создается конструктором")
     @Test
     void shouldHaveCorrectConstructor() {
-        Question question = new Question("testQuestion", Collections.singletonList("testAnswer"));
+        Question question = new Question("testQuestion", Collections.singletonList("testcorrectAnswer"), "userAnswer");
 
         assertEquals("testQuestion", question.getQuestion());
     }
