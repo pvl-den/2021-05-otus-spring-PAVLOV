@@ -48,7 +48,9 @@ public class QuizServiceImpl implements QuizService {
         final AtomicInteger result = new AtomicInteger(0);
 
         allQuestions.forEach(q -> {
-            if (q.getCorrectAnswer().contains(q.getUserAnswer())) result.incrementAndGet();
+            if (q.getCorrectAnswer().toString().toUpperCase().contains(q.getUserAnswer().toUpperCase())){
+                result.incrementAndGet();
+            }
         });
         return result.get();
     }
