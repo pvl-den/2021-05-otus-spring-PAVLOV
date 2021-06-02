@@ -55,7 +55,7 @@ public class QuizServiceImpl implements QuizService {
         return result.get();
     }
 
-    public User getUser() {
+    private User getUser() {
         System.out.println("Enter your name: ");
         final String firstName = sc.nextLine();
 
