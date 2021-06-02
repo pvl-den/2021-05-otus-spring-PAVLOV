@@ -31,12 +31,7 @@ public class QuestionsDaoImpl implements QuestionsDao {
 
         try (Scanner scanner = new Scanner(new ClassPathResource(fileName).getInputStream())) {
 
-            final String DELIMITER = "\n";
-            scanner.useDelimiter(DELIMITER);
-
-            while (scanner.hasNext()) {
-                stringList.add(scanner.next().split(";"));
-            }
+            parseFile(stringList, scanner);
 
             questions = getQuestions(stringList);
 
@@ -44,6 +39,15 @@ public class QuestionsDaoImpl implements QuestionsDao {
             ex.printStackTrace();
         }
         return questions;
+    }
+
+    private void parseFile(List<String[]> stringList, Scanner scanner) {
+        final String DELIMITER = "\n";
+        scanner.useDelimiter(DELIMITER);
+
+        while (scanner.hasNext()) {
+            stringList.add(scanner.next().split(";"));
+        }
     }
 
     private List<Question> getQuestions(final List<String[]> stringList) {

@@ -32,16 +32,24 @@ public class QuizServiceImpl implements QuizService {
             throw new IllegalStateException("the list of questions is empty");
         }
 
+        questioning(allQuestions);
+
+        final int result = getResult(allQuestions);
+
+        outputResult(result);
+    }
+
+    private void outputResult(final int result) {
+        System.out.println("thank you for your answers " + user.getFirstName() + " " + user.getLastName());
+        System.out.println("your score: " + result + " points");
+    }
+
+    private void questioning(final List<Question> allQuestions) {
         System.out.println("please answer the questions");
         for (Question question : allQuestions) {
             System.out.println(question.getQuestion());
             question.setUserAnswer(sc.nextLine());
         }
-
-        final int result = getResult(allQuestions);
-
-        System.out.println("thank you for your answers " + user.getFirstName() + " " + user.getLastName());
-        System.out.println("your score: " + result + " points");
     }
 
     private int getResult(final List<Question> allQuestions) {
