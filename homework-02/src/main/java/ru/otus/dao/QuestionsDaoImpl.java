@@ -14,7 +14,11 @@ import java.util.stream.Collectors;
 @Data
 public class QuestionsDaoImpl implements QuestionsDao {
 
-    private String fileName;
+    private final String fileName;
+
+    public QuestionsDaoImpl(final String fileName) {
+        this.fileName = fileName;
+    }
 
     @Override
     public List<Question> getAllQuestions() {

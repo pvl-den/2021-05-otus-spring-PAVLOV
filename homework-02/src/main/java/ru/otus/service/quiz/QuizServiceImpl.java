@@ -19,12 +19,12 @@ public class QuizServiceImpl implements QuizService {
     public QuizServiceImpl(final QuestionsService questionsService) {
         this.questionsService = questionsService;
         this.sc = new Scanner(System.in);
+        this.user = getUser();
     }
 
 
     @Override
     public void startQuiz() {
-        this.user = getUser();
 
         final List<Question> allQuestions = questionsService.getAllQuestions();
 
@@ -38,7 +38,7 @@ public class QuizServiceImpl implements QuizService {
             question.setUserAnswer(sc.nextLine());
         }
 
-        int result = getResult(allQuestions);
+        final int result = getResult(allQuestions);
 
         System.out.println("thank you for your answers " + user.getFirstName() + " " + user.getLastName());
         System.out.println("your score: " + result + " points");

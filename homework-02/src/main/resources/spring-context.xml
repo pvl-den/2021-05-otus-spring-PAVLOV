@@ -9,7 +9,7 @@
     </bean>
 
     <bean id="questionsDao" class="ru.otus.dao.QuestionsDaoImpl">
-        <property name="fileName" value="questions.csv"/>
+        <constructor-arg name="fileName" value="questions.csv"/>
     </bean>
 
     <bean id="questionsService" class="ru.otus.service.questions.QuestionsServiceImpl">

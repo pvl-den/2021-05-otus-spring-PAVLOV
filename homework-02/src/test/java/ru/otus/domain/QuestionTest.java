@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @DisplayName("Класс Question")
 class QuestionTest {
@@ -15,7 +15,9 @@ class QuestionTest {
     void shouldHaveCorrectConstructor() {
         Question question = new Question("testQuestion", Collections.singletonList("testcorrectAnswer"), "userAnswer");
 
-        assertEquals("testQuestion", question.getQuestion());
+        assertThat(question.getQuestion())
+                .isNotNull()
+                .isEqualTo("testQuestion");
     }
 
 }

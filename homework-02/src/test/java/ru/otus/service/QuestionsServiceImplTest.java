@@ -13,7 +13,7 @@ import ru.otus.service.questions.QuestionsServiceImpl;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
@@ -31,14 +31,15 @@ public class QuestionsServiceImplTest {
     }
 
     @Test
-    void getAllQuestions() {
+    public void getAllQuestions() {
         List<Question> questions = Collections.singletonList(Question.builder()
                 .question("testQuestion")
                 .correctAnswer(Collections.singletonList("testAnswer"))
                 .build());
 
         given(questionsDao.getAllQuestions()).willReturn(questions);
-        assertEquals(questionsService.getAllQuestions(), questions);
+        assertThat(questionsService.getAllQuestions())
+                .isNotNull()
+                .isEqualTo(questions);
     }
-
 }
