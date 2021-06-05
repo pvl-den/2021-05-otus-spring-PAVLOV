@@ -1,21 +1,20 @@
 package ru.otus;
 
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import ru.otus.domain.Question;
-import ru.otus.domain.User;
-import ru.otus.service.questions.QuestionsService;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import ru.otus.service.quiz.QuizService;
-import ru.otus.service.quiz.QuizServiceImpl;
 
-import java.util.List;
-
+@ComponentScan(basePackages = "ru.otus")
+@PropertySource("classpath:application.properties")
+@Configuration
 public class Main {
 
     public static void main(String[] args) {
 
-        final ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("/spring-context.xml");
+        final AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Main.class);
 
-        QuizService quizService = context.getBean(QuizService.class);
-        quizService.startQuiz();
+        context.getBean(QuizService.class).startQuiz();
     }
 }

@@ -1,6 +1,8 @@
 package ru.otus.service.quiz;
 
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 import ru.otus.domain.Question;
 import ru.otus.domain.User;
 import ru.otus.service.questions.QuestionsService;
@@ -10,14 +12,19 @@ import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Data
+@Service
 public class QuizServiceImpl implements QuizService {
+
+    private final Double resultQuiz;
     private final Scanner sc;
     private User user;
 
     private final QuestionsService questionsService;
 
-    public QuizServiceImpl(final QuestionsService questionsService) {
+    public QuizServiceImpl(final QuestionsService questionsService,
+                           @Value("${resultQuiz}") final Double resultQuiz) {
         this.questionsService = questionsService;
+        this.resultQuiz = resultQuiz;
         this.sc = new Scanner(System.in);
         this.user = getUser();
     }
@@ -34,14 +41,14 @@ public class QuizServiceImpl implements QuizService {
 
         questioning(allQuestions);
 
-        final int result = getResult(allQuestions);
+        final boolean isPassing = getResult(allQuestions);
 
-        outputResult(result);
+        outputResult(isPassing);
     }
 
-    private void outputResult(final int result) {
-        System.out.println("thank you for your answers " + user.getFirstName() + " " + user.getLastName());
-        System.out.println("your score: " + result + " points");
+    private void outputResult(final boolean isPassing) {
+        System.out.println("thank you for your answers " + user.getFirstName());
+        System.out.println(isPassing ? "your result: SUCCESS" : "your result: FAIL");
     }
 
     private void questioning(final List<Question> allQuestions) {
@@ -52,15 +59,15 @@ public class QuizServiceImpl implements QuizService {
         }
     }
 
-    private int getResult(final List<Question> allQuestions) {
+    private boolean getResult(final List<Question> allQuestions) {
         final AtomicInteger result = new AtomicInteger(0);
 
         allQuestions.forEach(q -> {
-            if (q.getCorrectAnswer().toString().toUpperCase().contains(q.getUserAnswer().toUpperCase())){
+            if (q.getCorrectAnswer().toString().toUpperCase().contains(q.getUserAnswer().toUpperCase())) {
                 result.incrementAndGet();
             }
         });
-        return result.get();
+        return ((double) result.get() / allQuestions.size()) >= resultQuiz;
     }
 
     private User getUser() {

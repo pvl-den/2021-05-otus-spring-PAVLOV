@@ -1,6 +1,7 @@
 package ru.otus.dao;
 
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.ClassPathResource;
 import ru.otus.domain.Question;
 
@@ -12,13 +13,10 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 @Data
+@RequiredArgsConstructor
 public class QuestionsDaoImpl implements QuestionsDao {
 
     private final String fileName;
-
-    public QuestionsDaoImpl(final String fileName) {
-        this.fileName = fileName;
-    }
 
     @Override
     public List<Question> getAllQuestions() {
@@ -41,7 +39,7 @@ public class QuestionsDaoImpl implements QuestionsDao {
         return questions;
     }
 
-    private void parseFile(List<String[]> stringList, Scanner scanner) {
+    private void parseFile(final List<String[]> stringList, final Scanner scanner) {
         final String DELIMITER = "\n";
         scanner.useDelimiter(DELIMITER);
 
