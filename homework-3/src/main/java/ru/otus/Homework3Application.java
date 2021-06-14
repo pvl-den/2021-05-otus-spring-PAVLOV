@@ -1,6 +1,5 @@
 package ru.otus;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -10,7 +9,6 @@ import ru.otus.service.quiz.QuizServiceImpl;
 
 @EnableConfigurationProperties(QuizConfig.class)
 @SpringBootApplication
-@RequiredArgsConstructor
 public class Homework3Application {
 
 
