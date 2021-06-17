@@ -5,9 +5,9 @@ import lombok.Data;
 
 @Builder
 @Data
-public class User {
+public final class User {
 
-    private String firstName;
+    private final String firstName;
 
-    private String lastName;
+    private final String lastName;
 }

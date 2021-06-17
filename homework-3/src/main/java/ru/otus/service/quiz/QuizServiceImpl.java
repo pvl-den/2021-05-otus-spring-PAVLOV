@@ -14,17 +14,16 @@ import java.util.Locale;
 import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
 
-@Data
 @Slf4j
 @Service
 public class QuizServiceImpl implements QuizService {
 
-    private Double resultQuiz;
+    private final Double resultQuiz;
     private final Scanner sc;
     private User user;
     private final MessageSource messageSource;
     private Locale locale;
-    private String[] availableLocales;
+    private final String[] availableLocales;
 
 
     private final QuestionsService questionsService;

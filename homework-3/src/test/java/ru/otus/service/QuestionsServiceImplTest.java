@@ -37,6 +37,7 @@ public class QuestionsServiceImplTest {
 
     @Test
     public void getAllQuestions() {
+
         List<Question> questions = Collections.singletonList(Question.builder()
                 .question("testQuestion")
                 .correctAnswer(Collections.singletonList("testAnswer"))
