@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import ru.otus.domain.Question;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -29,7 +30,7 @@ public class ReadFromFileImpl implements ReadFromFile {
         final List<String[]> stringList = new ArrayList<>();
         List<Question> questions = new ArrayList<>();
 
-        try (Scanner scanner = new Scanner(new ClassPathResource(fileName).getInputStream())) {
+        try (Scanner scanner = new Scanner(getInputStream(fileName))) {
 
             parseFile(stringList, scanner);
             questions = getQuestions(stringList);
@@ -41,6 +42,15 @@ public class ReadFromFileImpl implements ReadFromFile {
         return questions;
     }
 
+    @Override
+    public InputStream getInputStream(String fileName) throws IOException {
+        try {
+            return new ClassPathResource(fileName).getInputStream();
+        } catch (IOException e) {
+            throw new IOException();
+        }
+    }
+
     private void parseFile(final List<String[]> stringList, final Scanner scanner) {
         final String DELIMITER = "\n";
         scanner.useDelimiter(DELIMITER);
@@ -50,7 +60,8 @@ public class ReadFromFileImpl implements ReadFromFile {
         }
     }
 
-    private List<Question> getQuestions(final List<String[]> stringList) {
+    @Override
+    public List<Question> getQuestions(final List<String[]> stringList) {
         return stringList.stream().
                 map(line -> Question.builder()
                         .question(line[0])
