@@ -1,6 +1,5 @@
 package ru.otus.service.quiz;
 
-import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
@@ -77,8 +76,9 @@ public class QuizServiceImpl implements QuizService {
         log.info("end testing");
     }
 
-    private void outputResult(final boolean isPassing) {
-        System.out.println(user.getFirstName() + " " + messageSource.getMessage("end_testing", new String[]{}, locale));
+    @Override
+    public void outputResult(final boolean isPassing) {
+        System.out.println(" " + messageSource.getMessage("end_testing", new String[]{}, locale));
 
         System.out.println(isPassing
                 ? messageSource.getMessage("result_success", new String[]{}, locale)
@@ -95,7 +95,8 @@ public class QuizServiceImpl implements QuizService {
         }
     }
 
-    private boolean getResult(final List<Question> allQuestions) {
+    @Override
+    public boolean getResult(final List<Question> allQuestions) {
         final AtomicInteger result = new AtomicInteger(0);
 
         allQuestions.forEach(q -> {

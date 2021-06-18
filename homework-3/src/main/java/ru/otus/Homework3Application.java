@@ -18,7 +18,5 @@ public class Homework3Application {
 
         ctx.getBean(QuizServiceImpl.class)
                 .startQuiz();
-
     }
-
 }
