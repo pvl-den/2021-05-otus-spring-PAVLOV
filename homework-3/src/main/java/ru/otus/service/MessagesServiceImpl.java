@@ -22,6 +22,7 @@ public class MessagesServiceImpl implements MessagesService {
         this.availableLanguages = quizConfig.getAvailableLocales();
         this.quizConfig = quizConfig;
         this.ioService = ioService;
+        this.locale = Locale.getDefault();
     }
 
     @Override
