@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 @Data
 @Repository
 @Slf4j
-public class ReadFromFileImpl implements ReadFromFile {
+public class ReadFromFileImpl implements ReadFromFileDao {
 
     @Override
     public List<Question> readQuestionsFromFile(String fileName) {

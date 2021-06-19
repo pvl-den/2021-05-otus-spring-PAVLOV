@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-public interface ReadFromFile {
+public interface ReadFromFileDao {
 
     List<Question> readQuestionsFromFile(final String fileName);
 

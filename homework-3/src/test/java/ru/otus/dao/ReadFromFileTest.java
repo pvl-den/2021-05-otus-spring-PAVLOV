@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.*;
 class ReadFromFileTest {
 
     @Autowired
-    public ReadFromFile readFromFile;
+    public ReadFromFileDao readFromFile;
 
     @Test
     public void testReadFromFile() {

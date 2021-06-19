@@ -1,11 +1,12 @@
 package ru.otus.service.quiz;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 import ru.otus.config.QuizConfig;
 import ru.otus.domain.Question;
 import ru.otus.domain.User;
+import ru.otus.service.IOService;
+import ru.otus.service.MessagesService;
 import ru.otus.service.questions.QuestionsService;
 
 import java.util.List;
@@ -20,20 +21,23 @@ public class QuizServiceImpl implements QuizService {
     private final Double resultQuiz;
     private final Scanner sc;
     private User user;
-    private final MessageSource messageSource;
     private Locale locale;
+    private final MessagesService messagesService;
     private final String[] availableLocales;
+    private final IOService ioService;
 
 
     private final QuestionsService questionsService;
 
     public QuizServiceImpl(final QuestionsService questionsService,
                            final QuizConfig quizConfig,
-                           final MessageSource messageSource) {
+                           final MessagesService messagesService,
+                           final IOService ioService) {
         this.questionsService = questionsService;
         this.resultQuiz = quizConfig.getResultQuiz();
         this.availableLocales = quizConfig.getAvailableLocales();
-        this.messageSource = messageSource;
+        this.messagesService = messagesService;
+        this.ioService = ioService;
         this.sc = new Scanner(System.in);
         this.locale = Locale.getDefault();
     }
@@ -42,22 +46,19 @@ public class QuizServiceImpl implements QuizService {
     public void startQuiz() {
         log.info("start testing");
 
-        System.out.println(messageSource.getMessage("select_language", new String[]{}, locale));
+        ioService.out(messagesService.getMessage("select_language"));
+        messagesService.displayAvailableLanguages(availableLocales);
 
-        for (int i = 0; i < availableLocales.length; i++) {
-            String tag = availableLocales[i];
-            System.out.println((i) + ". " + Locale.forLanguageTag(tag).getDisplayLanguage(Locale.forLanguageTag(tag)));
-        }
-
-        String inputLocal = sc.nextLine();
+        String inputLocalStr = sc.nextLine();
 
         try {
-            locale = Locale.forLanguageTag(availableLocales[Integer.parseInt(inputLocal)]);
+            final int inputLocal = Integer.parseInt(inputLocalStr);
+            messagesService.setLocale(inputLocal);
         } catch (Exception e) {
             log.error("incorrect locale input");
             throw new IllegalStateException("incorrect locale input. " + e.getMessage() + " " + e.getCause());
         }
-
+        this.locale = messagesService.getLocale();
         this.user = getUser();
 
         final List<Question> allQuestions = questionsService.getAllQuestions(locale);
@@ -71,26 +72,26 @@ public class QuizServiceImpl implements QuizService {
 
         final boolean isPassing = getResult(allQuestions);
 
-        outputResult(isPassing);
+        outputResultQuiz(isPassing);
 
         log.info("end testing");
     }
 
     @Override
-    public void outputResult(final boolean isPassing) {
-        System.out.println(" " + messageSource.getMessage("end_testing", new String[]{}, locale));
+    public void outputResultQuiz(final boolean isPassing) {
+        ioService.out(" " + messagesService.getMessage("end_testing"));
 
-        System.out.println(isPassing
-                ? messageSource.getMessage("result_success", new String[]{}, locale)
-                : messageSource.getMessage("result_fail", new String[]{}, locale));
+        ioService.out(isPassing
+                ? messagesService.getMessage("result_success")
+                : messagesService.getMessage("result_fail"));
     }
 
     private void questioning(final List<Question> allQuestions) {
 
-        System.out.println(messageSource.getMessage("start_testing", new String[]{}, locale));
+        ioService.out(messagesService.getMessage("start_testing"));
 
         for (Question question : allQuestions) {
-            System.out.println(question.getQuestion());
+            ioService.out(question.getQuestion());
             question.setUserAnswer(sc.nextLine());
         }
     }
@@ -108,10 +109,10 @@ public class QuizServiceImpl implements QuizService {
     }
 
     private User getUser() {
-        System.out.println(messageSource.getMessage("your_name", new String[]{}, locale));
+        ioService.out(messagesService.getMessage("your_name"));
         final String firstName = sc.nextLine();
 
-        System.out.println(messageSource.getMessage("your_last_name", new String[]{}, locale));
+        ioService.out(messagesService.getMessage("your_last_name"));
         final String lastName = sc.nextLine();
 
         return User.builder()

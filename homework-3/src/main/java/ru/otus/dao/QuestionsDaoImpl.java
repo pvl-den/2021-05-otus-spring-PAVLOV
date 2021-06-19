@@ -15,7 +15,7 @@ import java.util.Locale;
 public class QuestionsDaoImpl implements QuestionsDao {
 
     private final QuizConfig quizConfig;
-    private final ReadFromFile readFromFile;
+    private final ReadFromFileDao readFromFile;
 
     @Override
     public List<Question> getAllQuestions(final Locale locale) {
