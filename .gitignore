@@ -85,3 +85,5 @@ out/
 
 target/
 /homework-3/.mvn/
+mvnw
+*.cmd
