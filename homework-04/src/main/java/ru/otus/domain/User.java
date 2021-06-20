@@ -1,13 +1,17 @@
 package ru.otus.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Builder
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public final class User {
 
-    private final String firstName;
+    private String firstName;
 
-    private final String lastName;
+    private String lastName;
 }

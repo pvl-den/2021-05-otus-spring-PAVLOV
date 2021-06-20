@@ -1,4 +1,4 @@
-package ru.otus.service;
+package ru.otus.service.core;
 
 import org.springframework.stereotype.Service;
 
@@ -15,6 +15,6 @@ public class IOServiceImpl implements IOService {
 
     @Override
     public void out(final String message) {
-    out.println(message);
+        out.println(message);
     }
 }

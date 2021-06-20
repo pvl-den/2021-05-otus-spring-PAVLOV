@@ -1,29 +1,45 @@
 package ru.otus.dao;
 
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Repository;
-import ru.otus.config.QuizConfig;
-import ru.otus.domain.Question;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
+import java.util.Scanner;
 
-@Data
 @Repository
 @RequiredArgsConstructor
 public class QuestionsDaoImpl implements QuestionsDao {
 
-    private final QuizConfig quizConfig;
-    private final ReadFromFileDao readFromFile;
-
     @Override
-    public List<Question> getAllQuestions(final Locale locale) {
-        return readFromFile.readQuestionsFromFile(getFileNameByLocale(locale));
+    public List<String[]> readFromFile(String fileName) throws IOException {
+
+        if (fileName.isBlank()) {
+            throw new IllegalArgumentException("file name is empty");
+        }
+
+        final List<String[]> stringList = new ArrayList<>();
+
+        try (Scanner scanner = new Scanner(new ClassPathResource(fileName).getInputStream())) {
+
+            extracted(stringList, scanner);
+
+        } catch (IOException ex) {
+            throw new IOException("file read error");
+        }
+
+        return stringList;
     }
 
-    private String getFileNameByLocale(final Locale locale) {
-        return String.format("%s_%s.%s", quizConfig.getFileName(), locale.getLanguage(), quizConfig.getFileType());
+    private void extracted(final List<String[]> stringList, final Scanner scanner) {
+        final String DELIMITER = "\n";
+        scanner.useDelimiter(DELIMITER);
+
+        while (scanner.hasNext()) {
+            stringList.add(scanner.next().split(";"));
+        }
     }
 
 }

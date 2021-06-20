@@ -9,3 +9,6 @@ spring:
     basename: i18n/bundle
     encoding: utf-8
 
+  shell:
+    interactive:
+      enabled: false

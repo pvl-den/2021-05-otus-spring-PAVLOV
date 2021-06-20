@@ -1,10 +1,12 @@
-package ru.otus.service.quiz;
+package ru.otus.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import ru.otus.domain.Question;
+import ru.otus.service.quiz.ResultService;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,30 +16,33 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@ActiveProfiles("test")
 @SpringBootTest
-class QuizServiceImplTest {
+class ResultServiceImplTest {
 
     @Autowired
-    private QuizService quizService;
+    private ResultService resultService;
 
     private List<Question> questionsWithCorrectAnswers;
     private List<Question> questionsWithInCorrectAnswers;
+    Double resultQuiz;
 
     @BeforeEach
     public void setUp() {
         questionsWithCorrectAnswers = getQuestionsWithCorrectAnswers();
         questionsWithInCorrectAnswers = getQuestionsWithInCorrectAnswers();
+        resultQuiz = 0.5;
     }
 
     @Test
     void TestGetResultSucceess() {
-        boolean result = quizService.getResult(questionsWithCorrectAnswers);
+        boolean result = resultService.getResult(questionsWithCorrectAnswers, resultQuiz);
         assertTrue(result);
     }
 
     @Test
     void TestGetResultFail() {
-        boolean result = quizService.getResult(questionsWithInCorrectAnswers);
+        boolean result = resultService.getResult(questionsWithInCorrectAnswers, resultQuiz);
         assertFalse(result);
     }
 
@@ -60,6 +65,5 @@ class QuizServiceImplTest {
         }
         return questions;
     }
-
 
 }

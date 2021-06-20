@@ -1,4 +1,4 @@
-package ru.otus.service;
+package ru.otus.service.core;
 
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;

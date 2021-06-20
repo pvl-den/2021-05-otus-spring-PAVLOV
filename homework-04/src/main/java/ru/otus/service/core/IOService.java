@@ -1,4 +1,4 @@
-package ru.otus.service;
+package ru.otus.service.core;
 
 public interface IOService {
 

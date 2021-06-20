@@ -5,8 +5,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import ru.otus.dao.QuestionsDao;
+import org.springframework.test.context.ActiveProfiles;
 import ru.otus.domain.Question;
+import ru.otus.service.questions.CreatingQuestions;
 import ru.otus.service.questions.QuestionsServiceImpl;
 
 import java.util.Collections;
@@ -16,20 +17,21 @@ import java.util.Locale;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 
+@ActiveProfiles("test")
 @SpringBootTest
 public class QuestionsServiceImplTest {
 
     private final Locale locale = Locale.getDefault();
 
     @MockBean
-    private QuestionsDao questionsDao;
+    private CreatingQuestions creatingQuestions;
 
     @Autowired
     QuestionsServiceImpl questionsService;
 
     @BeforeEach
     void setUp() {
-        questionsService = new QuestionsServiceImpl(questionsDao);
+        questionsService = new QuestionsServiceImpl(creatingQuestions);
     }
 
     @Test
@@ -40,7 +42,7 @@ public class QuestionsServiceImplTest {
                 .correctAnswer(Collections.singletonList("testAnswer"))
                 .build());
 
-        given(questionsDao.getAllQuestions(locale)).willReturn(questions);
+        given(creatingQuestions.createQuestionsFromFile(locale)).willReturn(questions);
 
         assertThat(questionsService.getAllQuestions(locale))
                 .isNotNull()

@@ -1,15 +1,17 @@
 package ru.otus.dao;
 
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import ru.otus.domain.Question;
+import ru.otus.service.questions.CreatingQuestions;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
@@ -20,66 +22,29 @@ import static org.assertj.core.api.Assertions.*;
 class ReadFromFileTest {
 
     @Autowired
-    public ReadFromFileDao readFromFile;
+    public QuestionsDao questionsDao;
 
     @Test
-    public void testReadFromFile() {
-        List<Question> questions = readFromFile.readQuestionsFromFile("questions-test_en.csv");
+    public void testReadFromFile() throws IOException {
 
-        Assertions.assertThat(questions)
+        List<String[]> strings = questionsDao.readFromFile("questions-test_en.csv");
+
+        Assertions.assertThat(strings)
                 .isNotNull().hasSize(5);
     }
 
     @Test
-    public void testReadFromFileFail() {
+    public void testReadFromFileEmptyFileName() {
         assertThatIllegalArgumentException().isThrownBy(() -> {
-            readFromFile.readQuestionsFromFile("");
-        }).withMessage("incorrect file name");
+            questionsDao.readFromFile("");
+        }).withMessage("file name is empty");
     }
 
     @Test
-    public void testGetInputStream() throws IOException {
-        InputStream inputStream = readFromFile.getInputStream("questions-test_en.csv");
-
-        assertThat(inputStream)
-                .isNotNull();
-    }
-
-    @Test
-    public void testGetInputStreamIOException() {
-
-        assertThatIOException().isThrownBy(() -> {
-            readFromFile.getInputStream("qw");
-        });
-    }
-
-    @Test
-    public void testGetQuestions() {
-
-        List<Question> questions = readFromFile.getQuestions(getArray());
-        Assertions.assertThat(questions).isNotNull().hasSize(5);
-
-        String question = questions.stream().findAny().get().getQuestion();
-        assertThat(question).isIn("testQuestions1", "testQuestions2", "testQuestions3", "testQuestions4", "testQuestions5");
-    }
-
-    private List<String[]> getArray() {
-
-        List<String[]> stringList = new ArrayList<>();
-
-        String[] line1 = {"testQuestions1", "testAnswer1"};
-        String[] line2 = {"testQuestions2", "testAnswer2"};
-        String[] line3 = {"testQuestions3", "testAnswer3"};
-        String[] line4 = {"testQuestions4", "testAnswer4"};
-        String[] line5 = {"testQuestions5", "testAnswer5"};
-
-        stringList.add(line1);
-        stringList.add(line2);
-        stringList.add(line3);
-        stringList.add(line4);
-        stringList.add(line5);
-
-        return stringList;
+    public void testReadFromFileIncorrectFileName() {
+        assertThatIOException ().isThrownBy(() -> {
+            questionsDao.readFromFile("incorectFileName");
+        }).withMessage("file read error");
     }
 
 }
