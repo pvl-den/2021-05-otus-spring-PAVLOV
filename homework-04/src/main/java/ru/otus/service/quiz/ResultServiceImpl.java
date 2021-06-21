@@ -21,8 +21,6 @@ public class ResultServiceImpl implements ResultService {
 
     @Override
     public void outputResultQuiz(final boolean isPassing, final User user) {
-        ioService.out(" " + messagesService.getMessage("end_testing") + " " + user.getFirstName());
-
         ioService.out(isPassing
                 ? messagesService.getMessage("result_success")
                 : messagesService.getMessage("result_fail"));

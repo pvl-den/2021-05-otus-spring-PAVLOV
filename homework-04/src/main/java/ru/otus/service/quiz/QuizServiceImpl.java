@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.otus.config.QuizConfig;
 import ru.otus.domain.Question;
-import ru.otus.domain.User;
 import ru.otus.service.core.IOService;
 import ru.otus.service.core.MessagesService;
 import ru.otus.service.questions.QuestionsService;
@@ -20,8 +19,6 @@ public class QuizServiceImpl implements QuizService {
 
     private final Double resultQuiz;
     private final Scanner sc;
-    private User user;
-    private Locale locale;
     private final MessagesService messagesService;
     private final String[] availableLocales;
     private final IOService ioService;
@@ -45,7 +42,6 @@ public class QuizServiceImpl implements QuizService {
         this.userService = userService;
         this.resultService = resultService;
         this.sc = new Scanner(System.in);
-        this.locale = Locale.getDefault();
     }
 
 
@@ -53,8 +49,7 @@ public class QuizServiceImpl implements QuizService {
     public void startQuiz() {
         log.info("start testing");
 
-        this.locale = messagesService.getLocale();
-        this.user = userService.getUser();
+        final Locale locale = messagesService.getLocale();
 
         final List<Question> allQuestions = questionsService.getAllQuestions(locale);
 
@@ -67,7 +62,7 @@ public class QuizServiceImpl implements QuizService {
 
         final boolean isPassing = resultService.getResult(allQuestions, resultQuiz);
 
-        resultService.outputResultQuiz(isPassing, user);
+        resultService.outputResultQuiz(isPassing, userService.getUser());
 
         log.info("end testing");
     }
@@ -98,6 +93,5 @@ public class QuizServiceImpl implements QuizService {
             question.setUserAnswer(sc.nextLine());
         }
     }
-
 }
 
