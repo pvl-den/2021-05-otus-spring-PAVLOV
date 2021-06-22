@@ -1,0 +1,14 @@
+quiz:
+  fileName: questions-test
+  fileType: csv
+  resultQuiz: 0.5
+  availableLocales: ru,en
+
+spring:
+  messages:
+    basename: i18n/bundle
+    encoding: utf-8
+
+  shell:
+    interactive:
+      enabled: false
