@@ -53,16 +53,15 @@ class BookServiceTest {
 
     @Test
     void insert() {
+        Book book = getBook();
+
+        bookService.insert(book);
+        verify(bookRepository, times(1)).insert(book);
     }
 
     @Test
     void getByName() {
-        Book book = Book.builder()
-                .id(-1)
-                .name("nameBook")
-                .genre(new Genre(1, "nameGenre"))
-                .author(new Author(1, "nameAuthor"))
-                .build();
+        Book book = getBook();
 
         given(bookRepository.getByName(book.getName())).willReturn(book);
 
@@ -71,12 +70,7 @@ class BookServiceTest {
 
     @Test
     void getById() {
-        Book book = Book.builder()
-                .id(-1)
-                .name("nameBook")
-                .genre(new Genre(1, "nameGenre"))
-                .author(new Author(1, "nameAuthor"))
-                .build();
+        Book book = getBook();
 
         given(bookRepository.getById(book.getId())).willReturn(book);
 
@@ -85,12 +79,7 @@ class BookServiceTest {
 
     @Test
     void getAll() {
-        Book book = Book.builder()
-                .id(-1)
-                .name("nameBook")
-                .genre(new Genre(1, "nameGenre"))
-                .author(new Author(1, "nameAuthor"))
-                .build();
+        Book book = getBook();
         given(bookRepository.getAll()).willReturn(Collections.singletonList(book));
 
         assertThat(bookService.getAll()).isEqualTo(Collections.singletonList(book));
@@ -98,6 +87,12 @@ class BookServiceTest {
 
     @Test
     void deleteById() {
+
+        Book book = getBook();
+        bookService.insert(book);
+        bookService.deleteById(book.getId());
+
+        verify(bookRepository, times(1)).deleteById(book.getId());
     }
 
     @Test
@@ -118,5 +113,14 @@ class BookServiceTest {
                 testCreateBookName.getAuthor().getId()));
 
         verify(bookRepository, times(1)).insert(testCreateBookName);
+    }
+
+    private Book getBook() {
+        return Book.builder()
+                .id(-1)
+                .name("nameBook")
+                .genre(new Genre(1, "nameGenre"))
+                .author(new Author(1, "nameAuthor"))
+                .build();
     }
 }
