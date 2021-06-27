@@ -5,6 +5,11 @@ spring:
     password: denis
     driver-class-name: org.h2.Driver
 
+  shell:
+    interactive:
+      enabled: false
+
+
   sql:
     init:
       schema-locations: schema.sql
