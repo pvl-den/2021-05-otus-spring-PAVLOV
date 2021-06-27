@@ -87,6 +87,26 @@ public class BookRepositoryJdbc implements BookRepository {
         );
     }
 
+    @Override
+    public Book getByName(final String name) {
+        return namedParameterJdbcOperations.queryForObject(
+                "select\n" +
+                        "   b.id,\n" +
+                        "   b.name, \n" +
+                        "   b.author_id, \n" +
+                        "   b.genre_id,\n" +
+                        "   a.name as name_author,\n" +
+                        "   g.name as name_genre\n" +
+                        "from books b\n" +
+                        "  join authors a on b.author_id = a.id \n" +
+                        "  join genres g on b.genre_id = g.id \n" +
+                        "where b.name = :name",
+                Map.of("name", name),
+                new BookMapper()
+        );
+
+    }
+
     private static class BookMapper implements RowMapper<Book> {
 
         @Override
