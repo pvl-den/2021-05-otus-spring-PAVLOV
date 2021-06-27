@@ -1,8 +1,8 @@
-package ru.otus.homework07.service;
+package ru.otus.homework07.repository;
 
 import ru.otus.homework07.entity.Genre;
 
-public interface GenreService {
+public interface GenreRepository {
 
     Genre getById(long id);
 

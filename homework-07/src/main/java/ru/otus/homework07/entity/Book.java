@@ -16,4 +16,13 @@ public class Book {
     private Genre genre;
     private Author author;
 
+    @Override
+    public String toString() {
+        return "\n" +
+                id + ". " + name +
+                "\nАвтор: " + author.getName() +
+                " Жанр: " + genre.getName() +
+                "\n";
+    }
+
 }

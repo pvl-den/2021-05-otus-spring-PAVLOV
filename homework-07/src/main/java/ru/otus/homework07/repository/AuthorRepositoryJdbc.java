@@ -19,7 +19,7 @@ public class AuthorRepositoryJdbc implements AuthorRepository {
 
     @Override
     public int count() {
-        return namedParameterJdbcOperations.getJdbcOperations().queryForObject("select count(a.id) from author a", Integer.class);
+        return namedParameterJdbcOperations.getJdbcOperations().queryForObject("select count(a.id) from authors a", Integer.class);
     }
 
     @Override
@@ -31,7 +31,19 @@ public class AuthorRepositoryJdbc implements AuthorRepository {
     @Override
     public Author getById(final long id) {
         return namedParameterJdbcOperations.queryForObject(
-                "select * from authors where id = :id", Map.of("id", id), new AuthorMapper());
+                "select authors.id, authors.name from authors where id = :id",
+                Map.of("id", id),
+                new AuthorMapper()
+        );
+    }
+
+    @Override
+    public Author getByName(String name) {
+        return namedParameterJdbcOperations.queryForObject(
+                "select a.id, a.name from authors a where name = :name",
+                Map.of("name", name),
+                new AuthorMapper()
+        );
     }
 
     @Override
@@ -45,7 +57,8 @@ public class AuthorRepositoryJdbc implements AuthorRepository {
     public void deleteById(final long id) {
 
         namedParameterJdbcOperations.update(
-                "delete from authors where id = :id", Map.of("id", id)
+                "delete from authors where id = :id",
+                Map.of("id", id)
         );
     }
 
@@ -53,8 +66,8 @@ public class AuthorRepositoryJdbc implements AuthorRepository {
 
         @Override
         public Author mapRow(ResultSet resultSet, int i) throws SQLException {
-            long id = resultSet.getLong("id");
-            String name = resultSet.getString("name");
+            final long id = resultSet.getLong("id");
+            final String name = resultSet.getString("name");
             return new Author(id, name);
         }
     }

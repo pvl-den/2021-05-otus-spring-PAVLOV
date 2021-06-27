@@ -12,6 +12,8 @@ public interface AuthorService {
 
     Author getById(long id);
 
+    Author getByName(String authorName);
+
     List<Author> getAll();
 
     void deleteById(long id);

@@ -1,20 +1,18 @@
-package ru.otus.homework07.service;
+package ru.otus.homework07.repository;
 
 import ru.otus.homework07.entity.Book;
 
 import java.util.List;
 
-public interface BookService {
+public interface BookRepository {
 
     int count();
 
-    boolean insert(Book book);
+    void insert(Book book);
 
     Book getById(long id);
 
     List<Book> getAll();
 
     void deleteById(long id);
-
-    Boolean createBook(String name, long authorId, long genreId);
 }

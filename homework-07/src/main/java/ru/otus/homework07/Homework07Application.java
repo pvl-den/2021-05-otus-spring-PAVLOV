@@ -10,10 +10,8 @@ import java.sql.SQLException;
 public class Homework07Application {
 
     public static void main(String[] args) throws SQLException {
-
+//        Console.main(args);
         SpringApplication.run(Homework07Application.class, args);
-
-        Console.main(args);
     }
 
 }

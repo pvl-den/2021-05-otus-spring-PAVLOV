@@ -29,6 +29,11 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
+    public Author getByName(String authorName) {
+        return authorRepository.getByName(authorName);
+    }
+
+    @Override
     public List<Author> getAll() {
         return authorRepository.getAll();
     }
