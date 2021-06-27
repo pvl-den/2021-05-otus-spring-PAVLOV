@@ -55,7 +55,7 @@ class BookServiceTest {
     void insert() {
         Book book = getBook();
 
-        bookService.insert(book);
+        assertTrue(bookService.insert(book));
         verify(bookRepository, times(1)).insert(book);
     }
 
