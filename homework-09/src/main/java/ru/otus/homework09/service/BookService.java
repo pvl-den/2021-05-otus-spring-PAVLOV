@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface BookService {
 
-    int count();
+    long count();
 
     Book save(Book book);
 

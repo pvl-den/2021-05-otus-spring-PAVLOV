@@ -1,6 +1,5 @@
 package ru.otus.homework09.repository;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import ru.otus.homework09.entity.Author;
 
@@ -11,16 +10,15 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Repository
-@RequiredArgsConstructor
-public class AuthorRepositoryJdbc implements AuthorRepository {
+public class AuthorRepositoryJpa implements AuthorRepository {
 
     @PersistenceContext
     private EntityManager em;
 
     @Override
-    public int count() {
-        final Query query = em.createQuery("select count(a.id) from Author a");
-        return query.executeUpdate();
+    public long count() {
+        final Query query = em.createQuery("select count(a) from Author a");
+        return (long) query.getSingleResult();
     }
 
     @Override

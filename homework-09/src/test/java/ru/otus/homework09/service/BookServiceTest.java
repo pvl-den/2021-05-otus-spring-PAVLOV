@@ -15,13 +15,11 @@ import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 
-@ActiveProfiles("test")
 @SpringBootTest
 class BookServiceTest {
 
@@ -45,7 +43,7 @@ class BookServiceTest {
     @Test
     void count() {
 
-        int expectedCount = 4;
+        long expectedCount = 4;
 
         given(bookRepository.count()).willReturn(expectedCount);
 
@@ -55,8 +53,11 @@ class BookServiceTest {
     @Test
     void insert() {
         Book book = getBook();
+        given(bookRepository.save(book)).willReturn(book);
 
-        assertEquals(bookService.save(book), book);
+        Book actualBook = bookService.save(book);
+
+        assertEquals(actualBook, book);
         verify(bookRepository, times(1)).save(book);
     }
 
@@ -108,19 +109,20 @@ class BookServiceTest {
                 .author(testAuthor_1)
                 .genre(testGenre_1)
                 .build();
+        given(bookRepository.save(testCreateBookName)).willReturn(testCreateBookName);
 
         assertEquals(bookService.createBook(testCreateBookName.getName(),
                 testCreateBookName.getAuthor().getId(),
                 testCreateBookName.getAuthor().getId()), testCreateBookName);
 
-//        verify(bookRepository, times(1)).save(testCreateBookName);
+        verify(bookRepository, times(1)).save(testCreateBookName);
     }
 
     private Book getBook() {
         return Book.builder()
                 .name("nameBook")
-                .genre(new Genre(1, "nameGenre"))
-                .author(new Author(1, "nameAuthor"))
+                .genre(new Genre(0, "nameGenre"))
+                .author(new Author(0, "nameAuthor"))
                 .build();
     }
 }

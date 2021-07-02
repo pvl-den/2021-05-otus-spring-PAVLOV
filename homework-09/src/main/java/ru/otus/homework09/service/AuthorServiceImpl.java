@@ -16,7 +16,7 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     @Transactional
-    public int count() {
+    public long count() {
         return authorRepository.count();
     }
 

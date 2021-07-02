@@ -3,21 +3,22 @@ package ru.otus.homework09.repository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 import ru.otus.homework09.entity.Author;
 
+import javax.persistence.NoResultException;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@ActiveProfiles("test")
-@JdbcTest
-@Import(AuthorRepositoryJdbc.class)
+@DataJpaTest
+@Import(AuthorRepositoryJpa.class)
 @Transactional
 class AuthorRepositoryTest {
 
@@ -26,12 +27,12 @@ class AuthorRepositoryTest {
 
     @Test
     void shouldReturnExpectedAuthorCount() {
-        int actualAuthorsCount = authorRepository.count();
+        long actualAuthorsCount = authorRepository.count();
         assertThat(actualAuthorsCount).isEqualTo(2);
     }
 
     @Test
-    void insertAuthorTest() {
+    void saveAuthorTest() {
         Author expectedAuthor = Author.builder().name("Джордж Оруэлл").build();
         authorRepository.save(expectedAuthor);
 
@@ -72,6 +73,6 @@ class AuthorRepositoryTest {
         authorRepository.deleteById(authorId);
 
         assertThatThrownBy(() -> authorRepository.getById(authorId))
-                .isInstanceOf(EmptyResultDataAccessException.class);
+                .isInstanceOf(NoResultException.class);
     }
 }

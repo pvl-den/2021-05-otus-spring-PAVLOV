@@ -12,15 +12,15 @@ import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
-public class BookRepositoryJdbc implements BookRepository {
+public class BookRepositoryJpa implements BookRepository {
 
     @PersistenceContext
     private EntityManager em;
 
     @Override
-    public int count() {
-        final Query query = em.createQuery("select count(b.id) from Book b", Integer.class);
-        return query.executeUpdate();
+    public long count() {
+        final Query query = em.createQuery("select count(b) from Book b", Long.class);
+        return (long) query.getSingleResult();
     }
 
     @Override
@@ -42,7 +42,7 @@ public class BookRepositoryJdbc implements BookRepository {
 
     @Override
     public List<Book> getAll() {
-        final TypedQuery<Book> query = em.createQuery("select b from Book b", Book.class);
+        final TypedQuery<Book> query = em.createQuery("select b from Book b join fetch b.author join fetch b.genre", Book.class);
         return query.getResultList();
     }
 

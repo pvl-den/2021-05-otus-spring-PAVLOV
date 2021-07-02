@@ -36,7 +36,7 @@ public class BookShellController {
     @ShellMethod(value = "Добавить книгу", key = {"add-book", "ab"})
     public String addBook(final String name, final long authorId, final long genreId) {
         final Book book = bookService.createBook(name, authorId, genreId);
-        return book !=null ? "Книга с названием '" + name + "' добавлена"
+        return book != null ? "Книга с названием '" + name + "' добавлена"
                 : "Ошибка добавления книги";
     }
 

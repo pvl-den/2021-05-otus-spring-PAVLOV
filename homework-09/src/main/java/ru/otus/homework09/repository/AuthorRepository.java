@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface AuthorRepository {
 
-    int count();
+    long count();
 
     Author save(Author author);
 

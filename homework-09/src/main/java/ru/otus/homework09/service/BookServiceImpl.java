@@ -22,7 +22,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     @Transactional
-    public int count() {
+    public long count() {
         return bookRepository.count();
     }
 

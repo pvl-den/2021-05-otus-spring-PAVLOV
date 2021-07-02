@@ -3,6 +3,7 @@ package ru.otus.homework09.repository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.ActiveProfiles;
@@ -11,15 +12,15 @@ import ru.otus.homework09.entity.Author;
 import ru.otus.homework09.entity.Book;
 import ru.otus.homework09.entity.Genre;
 
+import javax.persistence.NoResultException;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@ActiveProfiles("test")
-@Import({BookRepositoryJdbc.class, AuthorRepositoryJdbc.class, GenreRepositoryJdbc.class})
-@JdbcTest
+@Import({BookRepositoryJpa.class, AuthorRepositoryJpa.class, GenreRepositoryJpa.class})
+@DataJpaTest
 @Transactional
 class BookRepositoryTest {
 
@@ -28,17 +29,17 @@ class BookRepositoryTest {
 
     @Test
     void countBookTest() {
-        int countBooks = bookRepository.count();
+        long countBooks = bookRepository.count();
         assertThat(countBooks).isEqualTo(4);
     }
 
     @Test
     void insertBookTest() {
-        Author testAuthor = Author.builder().id(1).name("testAuthor").build();
-        Genre testGenre = Genre.builder().id(1).name("testGenre").build();
+        Author testAuthor = Author.builder().name("testAuthor").build();
+        Genre testGenre = Genre.builder().name("testGenre").build();
         Book testBook = Book.builder().name("testBookForInsertTest").author(testAuthor).genre(testGenre).build();
 
-        bookRepository.save(testBook);
+        Book save = bookRepository.save(testBook);
 
         List<String> collectNames = bookRepository.getAll().stream().map(Book::getName).collect(Collectors.toList());
 
@@ -48,8 +49,8 @@ class BookRepositoryTest {
     @Test
     void getById() {
 
-        Author testAuthor = Author.builder().id(1).name("testAuthor").build();
-        Genre testGenre = Genre.builder().id(1).name("testGenre").build();
+        Author testAuthor = Author.builder().name("testAuthor").build();
+        Genre testGenre = Genre.builder().name("testGenre").build();
         Book testBook = Book.builder().name("testBookForInsertTest").author(testAuthor).genre(testGenre).build();
 
         bookRepository.save(testBook);
@@ -67,8 +68,8 @@ class BookRepositoryTest {
     @Test
     void deleteById() {
 
-        Author testAuthor = Author.builder().id(1).name("testAuthor").build();
-        Genre testGenre = Genre.builder().id(1).name("testGenre").build();
+        Author testAuthor = Author.builder().name("testAuthor").build();
+        Genre testGenre = Genre.builder().name("testGenre").build();
         Book testBook = Book.builder().name("testBookForInsertTest").author(testAuthor).genre(testGenre).build();
 
         bookRepository.save(testBook);
@@ -80,6 +81,6 @@ class BookRepositoryTest {
         bookRepository.deleteById(bookId);
 
         assertThatThrownBy(() -> bookRepository.getById(bookId))
-                .isInstanceOf(EmptyResultDataAccessException.class);
+                .isInstanceOf(NoResultException.class);
     }
 }
