@@ -1,12 +1,12 @@
 package ru.otus.homework09.repository;
 
+import org.hibernate.SessionFactory;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 import ru.otus.homework09.entity.Author;
 import ru.otus.homework09.entity.Book;
@@ -26,6 +26,9 @@ class BookRepositoryTest {
 
     @Autowired
     private BookRepository bookRepository;
+
+    @Autowired
+    private TestEntityManager em;
 
     @Test
     void countBookTest() {
@@ -82,5 +85,22 @@ class BookRepositoryTest {
 
         assertThatThrownBy(() -> bookRepository.getById(bookId))
                 .isInstanceOf(NoResultException.class);
+    }
+
+    @DisplayName("должен загружать список всех книг с полной информацией о них")
+    @Test
+    void shouldReturnCorrectBooksListWithAllInfo() {
+        SessionFactory sessionFactory = em.getEntityManager().getEntityManagerFactory()
+                .unwrap(SessionFactory.class);
+        sessionFactory.getStatistics().setStatisticsEnabled(true);
+
+        System.out.println("\n\n\n\n----------------------------------------------------------------------------------------------------------");
+        var books = bookRepository.getAll();
+        assertThat(books).isNotNull().hasSize(4)
+                .allMatch(book -> !book.getName().equals(""))
+                .allMatch(book -> book.getAuthor() != null)
+                .allMatch(book -> book.getGenre() != null);
+        System.out.println("----------------------------------------------------------------------------------------------------------\n\n\n\n");
+        assertThat(sessionFactory.getStatistics().getPrepareStatementCount()).isEqualTo(1);
     }
 }
