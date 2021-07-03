@@ -63,16 +63,14 @@ class AuthorRepositoryTest {
     @Test
     void deleteByIdAuthorTest() {
         Author authorForDeleteTest = Author.builder().name("AutorForDeleteTest").build();
-        authorRepository.save(authorForDeleteTest);
+        Author savedAuthor = authorRepository.save(authorForDeleteTest);
 
-        long authorId = authorRepository.getByName(authorForDeleteTest.getName()).getId();
-
-        assertThatCode(() -> authorRepository.getById(authorId))
+        assertThatCode(() -> authorRepository.getById(savedAuthor.getId()))
                 .doesNotThrowAnyException();
 
-        authorRepository.deleteById(authorId);
+        authorRepository.deleteById(savedAuthor.getId());
 
-        assertThatThrownBy(() -> authorRepository.getById(authorId))
+        assertThatThrownBy(() -> authorRepository.getById(savedAuthor.getId()))
                 .isInstanceOf(NoResultException.class);
     }
 }

@@ -33,10 +33,10 @@ public class NotesRepositoryJpa implements NotesRepository {
     }
 
     @Override
-    public Note getByBookId(final long bookId) {
+    public List<Note> getByBookId(final long bookId) {
         final TypedQuery<Note> query = em.createQuery("select n from Note n where n.book.id = :bookId", Note.class);
         query.setParameter("bookId", bookId);
-        return query.getSingleResult();
+        return query.getResultList();
     }
 
     @Override

@@ -28,7 +28,7 @@ public class NoteServiceImpl implements NoteService {
 
     @Override
     @Transactional(readOnly = true)
-    public Note getByBookId(long bookId) {
+    public List<Note> getByBookId(final long bookId) {
         return notesRepository.getByBookId(bookId);
     }
 
@@ -40,13 +40,13 @@ public class NoteServiceImpl implements NoteService {
 
     @Override
     @Transactional
-    public int deleteById(long id) {
+    public int deleteById(final long id) {
         return notesRepository.deleteById(id);
     }
 
     @Override
     @Transactional
-    public int deleteByBookId(long bookId) {
+    public int deleteByBookId(final long bookId) {
         return notesRepository.deleteByBookId(bookId);
     }
 }

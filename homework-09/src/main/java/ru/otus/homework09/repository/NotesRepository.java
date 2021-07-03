@@ -10,7 +10,7 @@ public interface NotesRepository {
 
     Note getById(long id);
 
-    Note getByBookId(long bookId);
+    List<Note> getByBookId(long bookId);
 
     List<Note> getAll();
 

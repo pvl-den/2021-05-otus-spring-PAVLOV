@@ -22,11 +22,11 @@ public class Book {
     @Column(name = "name")
     private String name;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "genre_id", foreignKey = @ForeignKey(name = "fk_genre_id"))
     private Genre genre;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "author_id", foreignKey = @ForeignKey(name = "fk_author_id"))
     private Author author;
 

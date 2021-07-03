@@ -38,8 +38,8 @@ class BookRepositoryTest {
 
     @Test
     void insertBookTest() {
-        Author testAuthor = Author.builder().name("testAuthor").build();
-        Genre testGenre = Genre.builder().name("testGenre").build();
+        Author testAuthor = Author.builder().id(1).name("testAuthor").build();
+        Genre testGenre = Genre.builder().id(1).name("testGenre").build();
         Book testBook = Book.builder().name("testBookForInsertTest").author(testAuthor).genre(testGenre).build();
 
         Book save = bookRepository.save(testBook);
@@ -52,8 +52,8 @@ class BookRepositoryTest {
     @Test
     void getById() {
 
-        Author testAuthor = Author.builder().name("testAuthor").build();
-        Genre testGenre = Genre.builder().name("testGenre").build();
+        Author testAuthor = Author.builder().id(1).name("testAuthor").build();
+        Genre testGenre = Genre.builder().id(1).name("testGenre").build();
         Book testBook = Book.builder().name("testBookForInsertTest").author(testAuthor).genre(testGenre).build();
 
         bookRepository.save(testBook);
@@ -71,8 +71,8 @@ class BookRepositoryTest {
     @Test
     void deleteById() {
 
-        Author testAuthor = Author.builder().name("testAuthor").build();
-        Genre testGenre = Genre.builder().name("testGenre").build();
+        Author testAuthor = Author.builder().id(1).name("testAuthor").build();
+        Genre testGenre = Genre.builder().id(1).name("testGenre").build();
         Book testBook = Book.builder().name("testBookForInsertTest").author(testAuthor).genre(testGenre).build();
 
         bookRepository.save(testBook);
