@@ -75,16 +75,15 @@ class BookRepositoryTest {
         Genre testGenre = Genre.builder().id(1).name("testGenre").build();
         Book testBook = Book.builder().name("testBookForInsertTest").author(testAuthor).genre(testGenre).build();
 
-        bookRepository.save(testBook);
-        long bookId = bookRepository.getByName("testBookForInsertTest").getId();
+        Book savedBook = bookRepository.save(testBook);
+        long bookId = savedBook.getId();
 
-        assertThatCode(() -> bookRepository.getById(bookId))
-                .doesNotThrowAnyException();
+        assertThat(bookRepository.getById(bookId)).isNotNull();
 
         bookRepository.deleteById(bookId);
 
-        assertThatThrownBy(() -> bookRepository.getById(bookId))
-                .isInstanceOf(NoResultException.class);
+        assertThat(bookRepository.getById(bookId)).isNull();
+
     }
 
     @DisplayName("должен загружать список всех книг с полной информацией о них")

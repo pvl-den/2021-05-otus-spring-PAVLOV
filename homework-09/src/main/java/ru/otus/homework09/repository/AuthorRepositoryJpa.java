@@ -33,9 +33,7 @@ public class AuthorRepositoryJpa implements AuthorRepository {
 
     @Override
     public Author getById(final long id) {
-        final TypedQuery<Author> query = em.createQuery("select a from Author a where a.id = :id", Author.class);
-        query.setParameter("id", id);
-        return query.getSingleResult();
+        return em.find(Author.class, id);
     }
 
     @Override
@@ -52,9 +50,8 @@ public class AuthorRepositoryJpa implements AuthorRepository {
     }
 
     @Override
-    public int deleteById(final long id) {
-        final Query query = em.createQuery("delete from Author a where a.id = :id");
-        query.setParameter("id", id);
-        return query.executeUpdate();
+    public void deleteById(final long id) {
+        Author author = em.find(Author.class, id);
+        em.remove(author);
     }
 }

@@ -21,17 +21,17 @@ public class BookServiceImpl implements BookService {
     private final GenreService genreService;
 
     @Override
-    @Transactional
     public long count() {
         return bookRepository.count();
     }
 
     @Override
+    @Transactional
     public Book save(final Book book) {
         try {
             return bookRepository.save(book);
         } catch (Exception e) {
-            log.error("Ошибка сохранения книги");
+            log.error("Ошибка сохранения книги: " + e.getMessage());
             return null;
         }
     }
@@ -56,39 +56,32 @@ public class BookServiceImpl implements BookService {
 
     @Override
     @Transactional
-    public int deleteById(long id) {
-        return bookRepository.deleteById(id);
+    public void deleteById(long id) {
+        bookRepository.deleteById(id);
     }
 
     @Override
     @Transactional
     public Book createBook(final String name, final long authorId, final long genreId) {
+        try {
+            Book book = Book.builder()
+                    .name(name)
+                    .author(getAuthor(authorId))
+                    .genre(getGenre(genreId))
+                    .build();
 
-        final Author author = getAuthor(authorId);
-        final Genre genre = getGenre(genreId);
-
-        return save(Book.builder()
-                .name(name)
-                .author(author)
-                .genre(genre)
-                .build());
+            return save(book);
+        } catch (Exception e) {
+            log.error("Ошибка создания книги");
+            throw new IllegalArgumentException("Ошибка создания книги");
+        }
     }
 
     private Author getAuthor(long authorId) {
-        try {
-            return authorService.getById(authorId);
-        } catch (Exception e) {
-            log.error("Ошибка получения автора с id: {}", authorId);
-            throw new IllegalArgumentException("Ошибка получения автора с id: " + authorId);
-        }
+        return authorService.getById(authorId);
     }
 
     private Genre getGenre(long genreId) {
-        try {
-            return genreService.getById(genreId);
-        } catch (Exception e) {
-            log.error("Ошибка получения жанра с id: {}", genreId);
-            throw new IllegalArgumentException("Ошибка получения жанра с id: " + genreId);
-        }
+        return genreService.getById(genreId);
     }
 }

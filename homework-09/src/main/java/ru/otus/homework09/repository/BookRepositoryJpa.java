@@ -35,23 +35,20 @@ public class BookRepositoryJpa implements BookRepository {
 
     @Override
     public Book getById(final long id) {
-        final TypedQuery<Book> query = em.createQuery("select b from Book b where b.id = :id", Book.class);
-        query.setParameter("id", id);
-        return query.getSingleResult();
+        return em.find(Book.class, id);
     }
 
     @Override
     public List<Book> getAll() {
         final TypedQuery<Book> query = em.createQuery("select b from Book b join fetch b.author join fetch b.genre", Book.class);
+//        final TypedQuery<Book> query = em.createQuery("select b from Book b", Book.class);
         return query.getResultList();
     }
 
     @Override
-    public int deleteById(final long id) {
-        final Query query = em.createQuery("delete from Book b where b.id = :id");
-        query.setParameter("id", id);
-        return query.executeUpdate();
-
+    public void deleteById(final long id) {
+        Book book = em.find(Book.class, id);
+        em.remove(book);
     }
 
     @Override

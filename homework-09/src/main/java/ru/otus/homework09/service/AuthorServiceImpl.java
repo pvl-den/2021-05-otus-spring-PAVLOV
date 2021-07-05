@@ -15,7 +15,6 @@ public class AuthorServiceImpl implements AuthorService {
     private final AuthorRepository authorRepository;
 
     @Override
-    @Transactional
     public long count() {
         return authorRepository.count();
     }
@@ -46,7 +45,7 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     @Transactional
-    public int deleteById(final long id) {
-        return authorRepository.deleteById(id);
+    public void deleteById(final long id) {
+        authorRepository.deleteById(id);
     }
 }

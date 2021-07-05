@@ -22,10 +22,6 @@ public class AuthorShellController {
         return buildResultllAuthors(authorService.getAll());
     }
 
-    private String buildResultllAuthors(List<Author> allAuthors) {
-        return "Список авторов: \n" + allAuthors.stream().map(Author::getName).collect(Collectors.joining("\n"));
-    }
-
     @ShellMethod(value = "Добавить автора с именем name.", key = {"insert-author", "ia"})
     public String insertAuthor(final String firstName, final String lastName) {
 
@@ -39,6 +35,10 @@ public class AuthorShellController {
     public String deleteAuthor(final long id) {
         authorService.deleteById(id);
         return String.format("Автор c id=%s удален", id);
+    }
+
+    private String buildResultllAuthors(List<Author> allAuthors) {
+        return "Список авторов: \n" + allAuthors.stream().map(Author::getName).collect(Collectors.joining("\n"));
     }
 
 }

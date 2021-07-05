@@ -14,7 +14,7 @@ public interface NoteService {
 
     List<Note> getAll();
 
-    int deleteById(long id);
+    void deleteById(long id);
 
     int deleteByBookId(long bookId);
 

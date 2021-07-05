@@ -27,16 +27,7 @@ public class NotesRepositoryJpa implements NotesRepository {
 
     @Override
     public Note getById(final long id) {
-        final TypedQuery<Note> query = em.createQuery("select n from Note n where n.id = :id", Note.class);
-        query.setParameter("id", id);
-        return query.getSingleResult();
-    }
-
-    @Override
-    public List<Note> getByBookId(final long bookId) {
-        final TypedQuery<Note> query = em.createQuery("select n from Note n where n.book.id = :bookId", Note.class);
-        query.setParameter("bookId", bookId);
-        return query.getResultList();
+        return em.find(Note.class, id);
     }
 
     @Override
@@ -46,10 +37,9 @@ public class NotesRepositoryJpa implements NotesRepository {
     }
 
     @Override
-    public int deleteById(final long id) {
-        final Query query = em.createQuery("delete from Note n where n.id = :id");
-        query.setParameter("id", id);
-        return query.executeUpdate();
+    public void deleteById(final long id) {
+        Note note = em.find(Note.class, id);
+        em.remove(note);
     }
 
     @Override

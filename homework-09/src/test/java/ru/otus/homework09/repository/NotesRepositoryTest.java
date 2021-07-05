@@ -17,8 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 @Import({NotesRepositoryJpa.class, BookRepositoryJpa.class})
@@ -73,33 +72,6 @@ class NotesRepositoryTest {
         assertThat(notesRepository.getById(savedNotes.getId()).getNoteText()).isEqualTo(expectedNote.getNoteText());
     }
 
-
-    @Test
-    void getByBookId() {
-
-        Note expectedNote1 = Note.builder()
-                .noteAuthor("testAuyhor1")
-                .noteText("noteText1")
-                .noteDate(new Date())
-                .book(book)
-                .build();
-
-        Note expectedNote2 = Note.builder()
-                .noteAuthor("testAuyhor2")
-                .noteText("noteText2")
-                .noteDate(new Date())
-                .book(book)
-                .build();
-
-        Note savedNotes1 = notesRepository.save(expectedNote1);
-        Note savedNotes2 = notesRepository.save(expectedNote2);
-
-        List<Note> byBookId = notesRepository.getByBookId(book.getId());
-
-        assertThat(notesRepository.getByBookId(savedNotes1.getBook().getId())).hasSize(2);
-    }
-
-
     @Test
     void getAll() {
         List<Note> all = notesRepository.getAll();
@@ -117,14 +89,11 @@ class NotesRepositoryTest {
 
         Note savedNotes = notesRepository.save(expectedNote);
 
-        assertThatCode(() -> notesRepository.getById(savedNotes.getId()))
-                .doesNotThrowAnyException();
+        assertThat(notesRepository.getById(savedNotes.getId())).isNotNull();
 
         notesRepository.deleteById(savedNotes.getId());
 
-        assertThatThrownBy(() -> notesRepository.getById(savedNotes.getId()))
-                .isInstanceOf(NoResultException.class);
-
+        assertThat(notesRepository.getById(savedNotes.getId())).isNull();
     }
 
     @Test
@@ -137,14 +106,17 @@ class NotesRepositoryTest {
                 .book(book)
                 .build();
 
-        notesRepository.save(expectedNote);
+        Note savedNote = notesRepository.save(expectedNote);
 
-        assertThatCode(() -> notesRepository.getByBookId(book.getId()))
-                .doesNotThrowAnyException();
+        long bookId = savedNote.getBook().getId();
+        List<Note> collect1 = notesRepository.getAll().stream().filter(note -> note.getBook().getId() == bookId).collect(Collectors.toList());
+
+        assertFalse(collect1.isEmpty());
 
         notesRepository.deleteByBookId(book.getId());
+        List<Note> collect2 = notesRepository.getAll().stream().filter(note -> note.getBook().getId() == bookId).collect(Collectors.toList());
 
-        assertTrue(notesRepository.getByBookId(book.getId()).isEmpty());
+        assertTrue(collect2.isEmpty());
     }
 
     private Book getBook() {

@@ -10,11 +10,9 @@ public interface NotesRepository {
 
     Note getById(long id);
 
-    List<Note> getByBookId(long bookId);
-
     List<Note> getAll();
 
-    int deleteById(long id);
+    void deleteById(long id);
 
     int deleteByBookId(long bookId);
 }

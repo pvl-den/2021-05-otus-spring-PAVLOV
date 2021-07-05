@@ -15,9 +15,7 @@ public class GenreRepositoryJpa implements GenreRepository {
 
     @Override
     public Genre getById(final long id) {
-        final TypedQuery<Genre> query = em.createQuery("select g from Genre g where g.id = :id", Genre.class);
-        query.setParameter("id", id);
-        return query.getSingleResult();
+        return em.find(Genre.class, id);
     }
 
 }

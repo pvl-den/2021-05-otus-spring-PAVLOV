@@ -16,7 +16,7 @@ public interface BookService {
 
     List<Book> getAll();
 
-    int deleteById(long id);
+    void deleteById(long id);
 
     Book createBook(String name, long authorId, long genreId);
 }
