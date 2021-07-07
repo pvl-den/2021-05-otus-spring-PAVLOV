@@ -11,13 +11,13 @@ import ru.otus.homework09.entity.Book;
 import ru.otus.homework09.entity.Genre;
 import ru.otus.homework09.entity.Note;
 
-import javax.persistence.NoResultException;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DataJpaTest
 @Import({NotesRepositoryJpa.class, BookRepositoryJpa.class})
@@ -108,15 +108,14 @@ class NotesRepositoryTest {
 
         Note savedNote = notesRepository.save(expectedNote);
 
-        long bookId = savedNote.getBook().getId();
-        List<Note> collect1 = notesRepository.getAll().stream().filter(note -> note.getBook().getId() == bookId).collect(Collectors.toList());
+        List<Note> notesBeforDelete = notesRepository.getAll();
 
-        assertFalse(collect1.isEmpty());
+        assertThat(notesBeforDelete.size()).isEqualTo(3);
 
         notesRepository.deleteByBookId(book.getId());
-        List<Note> collect2 = notesRepository.getAll().stream().filter(note -> note.getBook().getId() == bookId).collect(Collectors.toList());
 
-        assertTrue(collect2.isEmpty());
+        List<Note> notesAfterDelete = notesRepository.getAll();
+        assertThat(notesAfterDelete.size()).isEqualTo(2);
     }
 
     private Book getBook() {

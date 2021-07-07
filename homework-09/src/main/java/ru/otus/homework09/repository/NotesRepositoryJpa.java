@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -18,6 +19,10 @@ public class NotesRepositoryJpa implements NotesRepository {
     @Override
     public Note save(Note note) {
         if (note.getId() == 0) {
+            if (note.getBook().getNotes() == null) {
+                note.getBook().setNotes(new ArrayList<>());
+            }
+            note.getBook().getNotes().add(note);
             em.persist(note);
         } else {
             return em.merge(note);
@@ -43,9 +48,9 @@ public class NotesRepositoryJpa implements NotesRepository {
     }
 
     @Override
-    public int deleteByBookId(final long bookId) {
+    public void deleteByBookId(final long bookId) {
         final Query query = em.createQuery("delete from Note n where n.book.id = :bookId");
         query.setParameter("bookId", bookId);
-        return query.executeUpdate();
+        query.executeUpdate();
     }
 }

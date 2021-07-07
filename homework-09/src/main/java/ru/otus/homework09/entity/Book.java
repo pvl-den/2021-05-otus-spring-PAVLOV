@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Builder
 @Data
@@ -30,6 +31,9 @@ public class Book {
     @JoinColumn(name = "author_id", foreignKey = @ForeignKey(name = "fk_author_id"))
     private Author author;
 
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
+    private List<Note> notes;
+
     @Override
     public String toString() {
         return "\n" +
@@ -38,5 +42,4 @@ public class Book {
                 " Жанр: " + genre.getName() +
                 "\n";
     }
-
 }

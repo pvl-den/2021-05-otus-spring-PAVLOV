@@ -16,6 +16,6 @@ public interface NoteService {
 
     void deleteById(long id);
 
-    int deleteByBookId(long bookId);
+    void deleteByBookId(long bookId);
 
 }

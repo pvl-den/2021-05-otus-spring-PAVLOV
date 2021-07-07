@@ -14,5 +14,5 @@ public interface NotesRepository {
 
     void deleteById(long id);
 
-    int deleteByBookId(long bookId);
+    void deleteByBookId(long bookId);
 }

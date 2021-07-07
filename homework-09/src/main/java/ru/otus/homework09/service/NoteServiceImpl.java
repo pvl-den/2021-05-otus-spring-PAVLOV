@@ -3,15 +3,12 @@ package ru.otus.homework09.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.otus.homework09.entity.Book;
 import ru.otus.homework09.entity.Note;
 import ru.otus.homework09.repository.BookRepository;
 import ru.otus.homework09.repository.NotesRepository;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
-
-import static java.util.stream.Collectors.toList;
 
 @Service
 @RequiredArgsConstructor
@@ -35,7 +32,8 @@ public class NoteServiceImpl implements NoteService {
     @Override
     @Transactional(readOnly = true)
     public List<Note> getByBookId(final long bookId) {
-        return this.getAll().stream().filter(note -> note.getBook().getId() == bookId).collect(toList());
+        Book book = bookRepository.getById(bookId);
+        return book.getNotes();
     }
 
     @Override
@@ -52,7 +50,7 @@ public class NoteServiceImpl implements NoteService {
 
     @Override
     @Transactional
-    public int deleteByBookId(final long bookId) {
-        return notesRepository.deleteByBookId(bookId);
+    public void deleteByBookId(final long bookId) {
+        notesRepository.deleteByBookId(bookId);
     }
 }

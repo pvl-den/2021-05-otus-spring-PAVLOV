@@ -30,7 +30,7 @@ public class Note {
     private String noteAuthor;
 
     @ManyToOne(targetEntity = Book.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "book_id", foreignKey = @ForeignKey(name = "fk_book_id"))
+    @JoinColumn(name = "book_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_book_id"), nullable = false)
     private Book book;
 
 }
