@@ -9,8 +9,9 @@ import ru.otus.homework11.entity.Genre;
 import ru.otus.homework11.entity.Note;
 import ru.otus.homework11.repository.BookRepository;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -25,7 +26,7 @@ class NoteServiceImplTest {
     BookRepository bookRepository;
 
     @Test
-    void getByBookId() {
+    void getByBookId() throws ParseException {
 
         Book book = getBook();
 
@@ -34,18 +35,15 @@ class NoteServiceImplTest {
         Note expectedNote = Note.builder()
                 .noteAuthor("testAuyhor")
                 .noteText("noteText")
-                .noteDate(new Date())
+                .noteDate(new SimpleDateFormat("yyyy-MM-dd").parse("2021-07-07"))
                 .book(savedBook)
                 .build();
 
         Note savedNote = noteService.save(expectedNote);
 
-        // savedNote.getBook().getNotes().add(savedNote);
-
         List<Note> notes = savedNote.getBook().getNotes();
 
-        //?? если явно не добавить как в закоментированной строке выше, то notes пустой
-        assertThat(notes).isEmpty();
+        assertThat(savedNote).isIn(notes);
     }
 
     private Book getBook() {

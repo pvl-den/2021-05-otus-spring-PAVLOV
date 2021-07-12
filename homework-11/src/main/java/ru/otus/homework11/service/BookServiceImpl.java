@@ -9,6 +9,7 @@ import ru.otus.homework11.entity.Book;
 import ru.otus.homework11.entity.Genre;
 import ru.otus.homework11.repository.BookRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -69,13 +70,13 @@ public class BookServiceImpl implements BookService {
                     .author(getAuthor(authorId))
                     .genre(getGenre(genreId))
                     .build();
-
-            return save(book);
+            return this.save(book);
         } catch (Exception e) {
             log.error("Ошибка создания книги");
             throw new IllegalArgumentException("Ошибка создания книги");
         }
     }
+
 
     private Author getAuthor(long authorId) {
         return authorService.getById(authorId);

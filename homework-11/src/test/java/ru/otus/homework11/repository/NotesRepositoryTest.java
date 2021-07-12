@@ -91,7 +91,7 @@ class NotesRepositoryTest {
 
         notesRepository.deleteById(savedNotes.getId());
 
-        assertThat(notesRepository.findById(savedNotes.getId())).isNull();
+        assertThat(notesRepository.findById(savedNotes.getId())).isEmpty();
     }
 
     @Test

@@ -79,7 +79,7 @@ class BookRepositoryTest {
 
         bookRepository.deleteById(bookId);
 
-        assertThat(bookRepository.findById(bookId)).isNull();
+        assertThat(bookRepository.findById(bookId)).isEmpty();
 
     }
 

@@ -108,13 +108,21 @@ class BookServiceTest {
                 .author(testAuthor_1)
                 .genre(testGenre_1)
                 .build();
+
+        Book savedBook = Book.builder()
+                .name("testCreateBookName")
+                .author(testAuthor_1)
+                .genre(testGenre_1)
+                .notes(null)
+                .build();
+
         given(bookRepository.save(testCreateBookName)).willReturn(testCreateBookName);
 
-        assertEquals(bookService.createBook(testCreateBookName.getName(),
+        assertEquals(testCreateBookName, bookService.createBook(testCreateBookName.getName(),
                 testCreateBookName.getAuthor().getId(),
-                testCreateBookName.getAuthor().getId()), testCreateBookName);
+                testCreateBookName.getAuthor().getId()));
 
-        verify(bookRepository, times(1)).save(testCreateBookName);
+        verify(bookRepository, times(1)).save(savedBook);
     }
 
     private Book getBook() {
