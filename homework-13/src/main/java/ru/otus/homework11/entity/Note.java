@@ -4,12 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
-import javax.persistence.*;
 import java.util.Date;
 
-@Table(name = "notes")
-@Entity
+@Document(collection = "notes")
 @Builder
 @Data
 @NoArgsConstructor
@@ -17,20 +18,19 @@ import java.util.Date;
 public class Note {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private String id;
 
-    @Column(name = "note_text", nullable = false)
+    @Field(name = "note_text")
     private String noteText;
 
-    @Column(name = "note_date", nullable = false)
+    @Field(name = "note_date")
     private Date noteDate;
 
-    @Column(name = "note_author")
+    @Field(name = "note_author")
     private String noteAuthor;
 
-    @ManyToOne(targetEntity = Book.class, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-    @JoinColumn(name = "book_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_book_id"), nullable = false)
+    //    @ManyToOne(targetEntity = Book.class, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+//    @JoinColumn(name = "book_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_book_id"), nullable = false)
     private Book book;
 
 }

@@ -9,16 +9,16 @@ public interface NoteService {
 
     Note save(Note note);
 
-    Note getById(long id);
+    Note getById(String id);
 
-    List<Note> getByBookId(long bookId);
+    List<Note> getByBookId(String bookId);
 
     List<Note> getAll();
 
-    void deleteById(long id);
+    void deleteById(String id);
 
-    void deleteByBookId(long bookId);
+    void deleteByBookId(String bookId);
 
-    Note createNote(final String noteText, final String noteAuthor, final long bookId);
+    Note createNote(final String noteText, final String noteAuthor, final String bookId);
 
 }

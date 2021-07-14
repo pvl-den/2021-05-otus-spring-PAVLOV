@@ -1,9 +1,9 @@
 package ru.otus.homework11.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import ru.otus.homework11.entity.Note;
 
-public interface NotesRepository extends JpaRepository<Note, Long> {
+public interface NotesRepository extends MongoRepository<Note, String> {
 
-    void deleteByBookId(long bookId);
+    void deleteByBookId(String bookId);
 }

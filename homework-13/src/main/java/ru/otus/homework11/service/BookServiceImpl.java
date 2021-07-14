@@ -39,8 +39,8 @@ public class BookServiceImpl implements BookService {
 
     @Override
     @Transactional(readOnly = true)
-    public Book getById(long id) {
-        return bookRepository.getById(id);
+    public Book getById(String id) {
+        return bookRepository.findById(id).orElse(null);
     }
 
     @Override
@@ -57,13 +57,13 @@ public class BookServiceImpl implements BookService {
 
     @Override
     @Transactional
-    public void deleteById(long id) {
+    public void deleteById(String id) {
         bookRepository.deleteById(id);
     }
 
     @Override
     @Transactional
-    public Book createBook(final String name, final long authorId, final long genreId) {
+    public Book createBook(final String name, final String authorId, final String genreId) {
         try {
             Book book = Book.builder()
                     .name(name)
@@ -78,11 +78,11 @@ public class BookServiceImpl implements BookService {
     }
 
 
-    private Author getAuthor(long authorId) {
+    private Author getAuthor(String authorId) {
         return authorService.getById(authorId);
     }
 
-    private Genre getGenre(long genreId) {
+    private Genre getGenre(String genreId) {
         return genreService.getById(genreId);
     }
 }

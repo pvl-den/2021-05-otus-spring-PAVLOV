@@ -44,15 +44,15 @@ public class NoteServiceImpl implements NoteService {
 
     @Override
     @Transactional(readOnly = true)
-    public Note getById(final long id) {
+    public Note getById(final String id) {
         return notesRepository.findById(id).orElse(null);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<Note> getByBookId(final long bookId) {
-        final Book book = bookRepository.getById(bookId);
-        return book.getNotes();
+    public List<Note> getByBookId(final String bookId) {
+        final Book book = bookRepository.findById(bookId).orElse(null);
+        return book != null ? book.getNotes() : new ArrayList<>();
     }
 
     @Override
@@ -63,18 +63,18 @@ public class NoteServiceImpl implements NoteService {
 
     @Override
     @Transactional
-    public void deleteById(final long id) {
+    public void deleteById(final String id) {
         notesRepository.deleteById(id);
     }
 
     @Override
     @Transactional
-    public void deleteByBookId(final long bookId) {
+    public void deleteByBookId(final String bookId) {
         notesRepository.deleteByBookId(bookId);
     }
 
     @Override
-    public Note createNote(final String noteText, final String noteAuthor, final long bookId) {
+    public Note createNote(final String noteText, final String noteAuthor, final String bookId) {
         final Book book = getBook(bookId);
         if (book == null) {
             log.error("Книга с id {} не существует", bookId);
@@ -96,7 +96,7 @@ public class NoteServiceImpl implements NoteService {
         }
     }
 
-    private Book getBook(final long bookId) {
+    private Book getBook(final String bookId) {
         return bookRepository.findById(bookId).orElse(null);
     }
 }

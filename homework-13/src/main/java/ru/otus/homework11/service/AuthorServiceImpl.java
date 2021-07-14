@@ -27,7 +27,7 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     @Transactional(readOnly = true)
-    public Author getById(final long id) {
+    public Author getById(final String id) {
         return authorRepository.findById(id).orElse(null);
     }
 
@@ -45,7 +45,7 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     @Transactional
-    public void deleteById(final long id) {
+    public void deleteById(final String id) {
         authorRepository.deleteById(id);
     }
 }

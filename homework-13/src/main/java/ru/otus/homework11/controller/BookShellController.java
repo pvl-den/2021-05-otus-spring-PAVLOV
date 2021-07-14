@@ -23,7 +23,7 @@ public class BookShellController {
     }
 
     @ShellMethod(value = "Получить книгу по id.", key = {"get-book-by-id", "gb-id"})
-    public String getBook(final long id) {
+    public String getBook(final String id) {
         return bookService.getById(id).toString();
     }
 
@@ -34,7 +34,7 @@ public class BookShellController {
      * @return название добавленной книги
      */
     @ShellMethod(value = "Добавить книгу", key = {"add-book", "ab"})
-    public String addBook(final String name, final long authorId, final long genreId) {
+    public String addBook(final String name, final String authorId, final String genreId) {
         final Book book = bookService.createBook(name, authorId, genreId);
         return book != null ? "Книга с названием '" + name + "' добавлена"
                 : "Ошибка добавления книги";
@@ -42,7 +42,7 @@ public class BookShellController {
 
 
     @ShellMethod(value = "Удаление книги по id.", key = {"delete-book", "db"})
-    public String deleteBook(final long id) {
+    public String deleteBook(final String id) {
         bookService.deleteById(id);
         return String.format("Книга c id=%s удалена", id);
     }

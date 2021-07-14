@@ -1,24 +1,15 @@
 spring:
-  datasource:
-    url: jdbc:h2:mem:lib
-    username: denis
-    password: denis
-    driver-class-name: org.h2.Driver
+  data:
+    mongodb:
+      port: 0
+      database: lib
 
-  sql:
-    init:
-      schema-locations: schema.sql
-      data-locations: data.sql
-      mode: always
+mongock:
+  runner-type: "ApplicationRunner" # default
+  change-logs-scan-package:
+    - ru.otus.spring.mongock.changelog
 
-  jpa:
-    generate-ddl: false
-    hibernate:
-      ddl-auto: validate
-    show-sql: true
-
-  h2:
-    console:
-      path: /h2-console
-      settings:
-        web-allow-others: true
+  mongo-db:
+    write-concern:
+      journal: false
+    read-concern: local

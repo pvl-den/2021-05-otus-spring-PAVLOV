@@ -10,13 +10,13 @@ public interface BookService {
 
     Book save(Book book);
 
-    Book getById(long id);
+    Book getById(String id);
 
     Book getByName(String name);
 
     List<Book> getAll();
 
-    void deleteById(long id);
+    void deleteById(String id);
 
-    Book createBook(String name, long authorId, long genreId);
+    Book createBook(String name, String authorId, String genreId);
 }
