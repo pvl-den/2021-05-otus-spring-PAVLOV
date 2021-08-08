@@ -1,10 +1,10 @@
-package com.example.homework16.service;
+package ru.otus.homework16.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.otus.homework11.entity.Genre;
-import ru.otus.homework11.repository.GenreRepository;
+import ru.otus.homework16.entity.Genre;
+import ru.otus.homework16.repository.GenreRepository;
 
 @Service
 @RequiredArgsConstructor

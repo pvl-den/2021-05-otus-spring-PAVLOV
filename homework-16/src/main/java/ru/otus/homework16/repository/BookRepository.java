@@ -1,8 +1,8 @@
-package com.example.homework16.repository;
+package ru.otus.homework16.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import ru.otus.homework11.entity.Book;
+import ru.otus.homework16.entity.Book;
 
 import java.util.List;
 

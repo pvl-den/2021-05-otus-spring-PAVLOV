@@ -1,13 +1,13 @@
-package com.example.homework16.service;
+package ru.otus.homework16.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.otus.homework11.entity.Book;
-import ru.otus.homework11.entity.Note;
-import ru.otus.homework11.repository.BookRepository;
-import ru.otus.homework11.repository.NotesRepository;
+import ru.otus.homework16.entity.Book;
+import ru.otus.homework16.entity.Note;
+import ru.otus.homework16.repository.BookRepository;
+import ru.otus.homework16.repository.NotesRepository;
 
 import java.util.ArrayList;
 import java.util.Date;

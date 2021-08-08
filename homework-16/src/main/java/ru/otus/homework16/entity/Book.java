@@ -1,10 +1,11 @@
-package com.example.homework16.entity;
+package ru.otus.homework16.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
 import java.util.List;
 
 @Builder

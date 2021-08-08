@@ -1,7 +1,7 @@
-package com.example.homework16.repository;
+package ru.otus.homework16.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import ru.otus.homework11.entity.Note;
+import ru.otus.homework16.entity.Note;
 
 public interface NotesRepository extends JpaRepository<Note, Long> {
 

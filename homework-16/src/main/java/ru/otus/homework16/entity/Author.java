@@ -1,17 +1,19 @@
-package com.example.homework16.entity;
+package ru.otus.homework16.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Table(name = "genres")
+import javax.persistence.*;
+
+@Table(name = "authors")
 @Entity
 @Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Genre {
+public class Author {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

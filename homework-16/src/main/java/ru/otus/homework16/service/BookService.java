@@ -1,6 +1,6 @@
-package com.example.homework16.service;
+package ru.otus.homework16.service;
 
-import ru.otus.homework11.entity.Book;
+import ru.otus.homework16.entity.Book;
 
 import java.util.List;
 
