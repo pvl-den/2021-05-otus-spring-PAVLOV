@@ -7,8 +7,10 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.otus.homework13.entity.Author;
 import ru.otus.homework13.entity.Book;
 import ru.otus.homework13.entity.Genre;
+import ru.otus.homework13.entity.Note;
 import ru.otus.homework13.repository.BookRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -64,10 +66,12 @@ public class BookServiceImpl implements BookService {
     @Transactional
     public Book createBook(final String name, final String authorId, final String genreId) {
         try {
+            List<Note> notes = new ArrayList<>();
             Book book = Book.builder()
                     .name(name)
                     .author(getAuthor(authorId))
                     .genre(getGenre(genreId))
+                    .notes(notes)
                     .build();
             return this.save(book);
         } catch (Exception e) {

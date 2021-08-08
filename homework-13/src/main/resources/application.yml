@@ -5,9 +5,9 @@ spring:
       database: lib
 
 mongock:
-  runner-type: "ApplicationRunner" # default
+  runner-type: "InitializingBean"
   change-logs-scan-package:
-    - ru.otus.spring.mongock.changelog
+    - ru.otus.homework13.mongock.changelog
 
   mongo-db:
     write-concern:

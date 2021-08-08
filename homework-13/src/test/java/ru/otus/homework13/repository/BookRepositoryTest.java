@@ -1,9 +1,11 @@
 package ru.otus.homework13.repository;
 
+import com.github.cloudyrock.mongock.ChangeLog;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.boot.test.context.SpringBootTest;
 import ru.otus.homework13.entity.Author;
 import ru.otus.homework13.entity.Book;
 import ru.otus.homework13.entity.Genre;
@@ -14,14 +16,12 @@ import java.util.stream.Collectors;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@DataJpaTest
+@ChangeLog
+@SpringBootTest
 class BookRepositoryTest {
 
     @Autowired
     private BookRepository bookRepository;
-
-    @Autowired
-    private TestEntityManager em;
 
     @Test
     void countBookTest() {
@@ -47,10 +47,10 @@ class BookRepositoryTest {
 
         Author testAuthor = Author.builder().id("1").name("testAuthor").build();
         Genre testGenre = Genre.builder().id("1").name("testGenre").build();
-        Book testBook = Book.builder().name("testBookForInsertTest").author(testAuthor).genre(testGenre).build();
+        Book testBook = Book.builder().name("testBookForInsertTest1").author(testAuthor).genre(testGenre).build();
 
         bookRepository.save(testBook);
-        String bookId = bookRepository.findByName("testBookForInsertTest").getId();
+        String bookId = bookRepository.findByName("testBookForInsertTest1").getId();
 
         assertThat(bookRepository.findById(bookId).get().getName()).isEqualTo(testBook.getName());
     }
@@ -58,7 +58,7 @@ class BookRepositoryTest {
     @Test
     void getAll() {
         List<Book> allBooks = bookRepository.findAll();
-        assertThat(allBooks.size()).isEqualTo(4);
+        assertThat(allBooks.size()).isEqualTo(2);
     }
 
     @Test

@@ -1,8 +1,9 @@
 package ru.otus.homework13.repository;
 
+import com.github.cloudyrock.mongock.ChangeLog;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import ru.otus.homework13.entity.Author;
 
 import java.util.List;
@@ -12,7 +13,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@DataMongoTest
+@ChangeLog
+@SpringBootTest
 class AuthorRepositoryTest {
 
     @Autowired
@@ -21,7 +23,7 @@ class AuthorRepositoryTest {
     @Test
     void shouldReturnExpectedAuthorCount() {
         long actualAuthorsCount = authorRepository.count();
-        assertThat(actualAuthorsCount).isEqualTo(2);
+        assertThat(actualAuthorsCount).isEqualTo(3);
     }
 
     @Test
@@ -37,7 +39,7 @@ class AuthorRepositoryTest {
 
     @Test
     void getByIdAuthorTest() {
-        Author expectedAuthor = Author.builder().name("TestAuthor").build();
+        Author expectedAuthor = Author.builder().id("3").name("TestAuthor").build();
         authorRepository.save(expectedAuthor);
 
         Author actualAuthor = authorRepository.findById("3").get();
@@ -50,7 +52,7 @@ class AuthorRepositoryTest {
     @Test
     void getAllAuthorTest() {
         List<Author> allAuthors = authorRepository.findAll();
-        assertThat(allAuthors.size()).isEqualTo(2);
+        assertThat(allAuthors.size()).isEqualTo(4);
     }
 
     @Test

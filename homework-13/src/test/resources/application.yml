@@ -4,10 +4,14 @@ spring:
       port: 0
       database: lib
 
+  shell:
+    interactive:
+      enabled: false
+
 mongock:
   runner-type: "ApplicationRunner" # default
   change-logs-scan-package:
-    - ru.otus.spring.mongock.changelog
+    - ru.otus.homework13.mongock.changelog
 
   mongo-db:
     write-concern:
