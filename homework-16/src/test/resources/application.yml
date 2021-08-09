@@ -5,10 +5,13 @@ spring:
     password: denis
     driver-class-name: org.h2.Driver
 
+    schema:
+      classpath: schema.sql
+    data:
+      classpath: data.sql
+
   sql:
     init:
-      schema-locations: schema.sql
-      data-locations: data.sql
       mode: always
 
   jpa:

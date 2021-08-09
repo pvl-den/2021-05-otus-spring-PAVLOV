@@ -1,4 +1,4 @@
-package ru.otus.homework16.controller;
+package ru.otus.homework16.rest;
 
 import ru.otus.homework16.service.AuthorService;
 import lombok.RequiredArgsConstructor;
