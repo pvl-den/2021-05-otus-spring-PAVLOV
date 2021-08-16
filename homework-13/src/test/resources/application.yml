@@ -1,0 +1,19 @@
+spring:
+  data:
+    mongodb:
+      port: 0
+      database: lib
+
+  shell:
+    interactive:
+      enabled: false
+
+mongock:
+  runner-type: "ApplicationRunner" # default
+  change-logs-scan-package:
+    - ru.otus.homework13.mongock.changelog
+
+  mongo-db:
+    write-concern:
+      journal: false
+    read-concern: local
