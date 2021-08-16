@@ -6,4 +6,7 @@ public interface GenreService {
 
     Genre getById(long id);
 
+    Genre getByName(String genreName);
+
+
 }
