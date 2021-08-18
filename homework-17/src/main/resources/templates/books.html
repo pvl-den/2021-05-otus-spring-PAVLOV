@@ -28,16 +28,23 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="book : ${books}">
-        <td th:text="${book.id}">1</td>
-        <td th:text="${book.name}">John Doe</td>
-        <td th:text="${book.genre.name}">John Doe</td>
-        <td th:text="${book.author.name}">John Doe</td>
-        <td>
-            <a th:href="@{/edit(id=${book.id})}" href="editbook.html">Edit</a>
-        </td>
-    </tr>
     </tbody>
 </table>
+<script>
+    $(function () {
+        $.get('/api/books').done(function (books) {
+            persons.forEach(function (book) {
+                $('tbody').append(`
+                    <tr>
+                        <td>${book.id}</td>
+                        <td>${book.name}</td>
+                        <td>${book.genre.name}</td>
+                        <td>${book.author.name}</td>
+                    </tr>
+                `)
+            });
+        })
+    });
+</script>
 </body>
 </html>

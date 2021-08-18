@@ -33,13 +33,4 @@ public class Book {
 
     @OneToMany(mappedBy = "book", cascade = CascadeType.MERGE)
     private List<Note> notes;
-
-    @Override
-    public String toString() {
-        return "\n" +
-                id + ". " + name +
-                "\nАвтор: " + author.getName() +
-                " Жанр: " + genre.getName() +
-                "\n";
-    }
 }
