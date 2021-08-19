@@ -37,11 +37,6 @@ public class NoteServiceImpl implements NoteService {
         }
     }
 
-    private boolean checkNotes(final Note savedNote) {
-        return savedNote.getBook().getNotes() == null || savedNote.getBook().getNotes().isEmpty();
-    }
-
-
     @Override
     @Transactional(readOnly = true)
     public Note getById(final long id) {
@@ -80,20 +75,21 @@ public class NoteServiceImpl implements NoteService {
             log.error("Книга с id {} не существует", bookId);
             throw new IllegalArgumentException("Ошибка создания комментария к книге");
         }
+        final Note note = getNote(noteText, noteAuthor, book);
+        return save(note);
+    }
 
-        try {
-            Note note = Note.builder()
-                    .noteText(noteText)
-                    .book(book)
-                    .noteAuthor(noteAuthor)
-                    .noteDate(new Date())
-                    .build();
+    private Note getNote(String noteText, String noteAuthor, Book book) {
+        return Note.builder()
+                .noteText(noteText)
+                .book(book)
+                .noteAuthor(noteAuthor)
+                .noteDate(new Date())
+                .build();
+    }
 
-            return save(note);
-        } catch (Exception e) {
-            log.error("Ошибка создания комментария к книге");
-            throw new IllegalArgumentException("Ошибка создания комментария к книге");
-        }
+    private boolean checkNotes(final Note savedNote) {
+        return savedNote.getBook().getNotes() == null || savedNote.getBook().getNotes().isEmpty();
     }
 
     private Book getBook(final long bookId) {
