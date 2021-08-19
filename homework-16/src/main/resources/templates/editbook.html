@@ -25,27 +25,41 @@
 <body>
 
 <!-- Book edition -->
-<form id="edit-form" th:action="@{/edit(id=${book.id})}" th:method="post" action="editbook.html">
+<form id="edit-form" th:action="@{/edit(id=${bookDto.id})}" th:method="post" action="editbook.html">
     <h1>Book Info:</h1>
 
     <div class="row">
         <label for="id-input">ID:</label>
-        <input id="id-input" type="text" readonly="readonly" th:value="${book.id}" value="1"/>
+        <input id="id-input" type="text" readonly="readonly" th:value="${bookDto.id}" value="1"/>
     </div>
 
     <div class="row">
         <label for="holder-input">Название:</label>
-        <input id="holder-input" name="bookName" type="text" th:value="${book.name}" value="Приключения Электроника"/>
+        <input id="holder-input" name="bookName" type="text" th:value="${bookDto.name}"
+               value="Приключения Электроника"/>
     </div>
 
-    <div class="row">
-        <label for="holder-input">Жанр:</label>
-        <input id="holder-input" readonly="readonly" name="genreName" type="text" th:value="${book.genre.name}" value="Приключения"/>
+    <div class="row" th:object="${books}">
+        <label>Жанр: </label>
+        <select name="genreName">
+            <option value="">Выберите жанр</option>
+            <option th:each="book : ${books}"
+                    th:value="${book.genre}"
+                    th:text="${book.genre}">
+            </option>
+        </select>
     </div>
 
-    <div class="row">
-        <label for="holder-input">Автор:</label>
-        <input id="holder-input" readonly="readonly" name="authorName" type="text" th:value="${book.author.name}" value="Сыроежкин"/>
+
+    <div class="row" th:object="${books}">
+        <label>Автор: </label>
+        <select name="authorName">
+            <option value="">Выберите автора</option>
+            <option th:each="book : ${books}"
+                    th:value="${book.author}"
+                    th:text="${book.author}">
+            </option>
+        </select>
     </div>
 
     <div class="row">
