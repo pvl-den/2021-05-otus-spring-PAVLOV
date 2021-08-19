@@ -13,6 +13,7 @@
             padding: 5px;
         }
     </style>
+    <script src="/webjars/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
 <h1>Books:</h1>
@@ -24,7 +25,6 @@
         <th>Name</th>
         <th>Genre</th>
         <th>Author</th>
-        <th>Action</th>
     </tr>
     </thead>
     <tbody>
@@ -33,13 +33,14 @@
 <script>
     $(function () {
         $.get('/api/books').done(function (books) {
-            persons.forEach(function (book) {
+            books.forEach(function (book) {
+
                 $('tbody').append(`
                     <tr>
                         <td>${book.id}</td>
                         <td>${book.name}</td>
-                        <td>${book.genre.name}</td>
-                        <td>${book.author.name}</td>
+                        <td>${book.genre}</td>
+                        <td>${book.author}</td>
                     </tr>
                 `)
             });

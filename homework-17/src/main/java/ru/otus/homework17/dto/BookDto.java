@@ -22,19 +22,16 @@ public class BookDto {
 
     private String name;
 
-    private Genre genre;
+    private String genre;
 
-    private Author author;
-
-    private List<Note> notes;
+    private String author;
 
     public static BookDto toDto(Book book){
         return BookDto.builder()
                 .id(book.getId())
                 .name(book.getName())
-                .genre(book.getGenre())
-                .author(book.getAuthor())
-                .notes(book.getNotes())
+                .genre(book.getGenre().getName())
+                .author(book.getAuthor().getName())
                 .build();
     }
 }
