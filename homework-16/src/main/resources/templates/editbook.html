@@ -25,17 +25,12 @@
 <body>
 
 <!-- Book edition -->
-<form id="edit-form" th:action="@{/edit(id=${bookDto.id})}" th:method="post" action="editbook.html">
+<form id="edit-form" th:action="@{/edit}" th:method="post" action="editbook.html">
     <h1>Book Info:</h1>
 
     <div class="row">
-        <label for="id-input">ID:</label>
-        <input id="id-input" type="text" readonly="readonly" th:value="${bookDto.id}" value="1"/>
-    </div>
-
-    <div class="row">
         <label for="holder-input">Название:</label>
-        <input id="holder-input" name="bookName" type="text" th:value="${bookDto.name}"
+        <input id="holder-input" name="bookName" type="text"
                value="Приключения Электроника"/>
     </div>
 

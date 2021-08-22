@@ -31,12 +31,9 @@ public class BookController {
     }
 
     @GetMapping("/edit")
-    public String editBook(@RequestParam("id") Long bookId, final Model model) {
+    public String editBook(final Model model) {
         final List<BookDto> books = bookService.getAll().stream().map(BookDto::toDto).collect(Collectors.toList());
-        Book book = bookService.getById(bookId);
         model.addAttribute("books", books);
-        model.addAttribute("bookDto", BookDto.toDto(book));
-
         return "editbook";
     }
 
