@@ -25,7 +25,6 @@ public class BookPagesController {
 
     @GetMapping("/")
     public String getAllBooks(final Model model) {
-//        List<BookDto> books = bookService.getAll().stream().map(BookDto::toDto).collect(Collectors.toList());
         model.addAttribute("books", "books");
         return "books";
     }
