@@ -27,11 +27,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public void configure( HttpSecurity http ) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                    .antMatchers( "/home" )
+                    .antMatchers( "/book" )
                     .permitAll()
                     .and()
                 .authorizeRequests()
-                    .antMatchers("/edit")
+                    .antMatchers("/book/edit")
                     .authenticated()
                     .and()
                 // Включает Form-based аутентификацию
