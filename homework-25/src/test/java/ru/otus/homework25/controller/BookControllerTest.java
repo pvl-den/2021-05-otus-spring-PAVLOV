@@ -57,6 +57,9 @@ class BookControllerTest {
 
     }
 
+    @WithMockUser(
+            username = "user"
+    )
     @Test
     void allBooksTest() throws Exception {
         mockMvc.perform(get("/book"))
@@ -65,7 +68,9 @@ class BookControllerTest {
 
 
     @WithMockUser(
-            username = "user"
+            username = "admin",
+            password = "admin",
+            roles = "ADMIN"
     )
     @Test
     @DisplayName("сохранение книги авторизованным пользователем")
