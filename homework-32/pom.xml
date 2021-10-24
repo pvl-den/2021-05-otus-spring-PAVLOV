@@ -10,9 +10,11 @@
     </parent>
     <groupId>ru.otus</groupId>
     <artifactId>homework-32</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.1</version>
+
     <name>homework-32</name>
-    <description>Demo project for Spring Boot</description>
+    <description>hw-docker</description>
+
     <properties>
         <java.version>11</java.version>
     </properties>

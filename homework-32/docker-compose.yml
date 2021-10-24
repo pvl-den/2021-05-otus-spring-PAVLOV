@@ -1,0 +1,28 @@
+version: '3'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    privileged: true
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_DRIVER_CLASS_NAME=org.postgresql.Driver
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/lib
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+    networks:
+      - nw
+  postgres:
+    image: "postgres"
+    ports:
+      - "5435:5435"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=lib
+    networks:
+      - nw
+networks:
+  nw:
