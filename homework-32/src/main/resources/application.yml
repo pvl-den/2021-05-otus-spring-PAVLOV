@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/lib?schema=public
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+
+    schema:
+      classpath: schema.sql
+    data:
+      classpath: data.sql
+
+  sql:
+    init:
+      mode: always
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL94Dialect
+    generate-ddl: false
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
